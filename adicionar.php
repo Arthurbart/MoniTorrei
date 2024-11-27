@@ -7,83 +7,6 @@
     <!-- Link para o Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">    
-    <style>
-
-        .card {
-        border-radius: 15px;
-        overflow: hidden;
-        }
-
-        .card-title {
-        font-size: 1.25rem;
-        font-weight: bold;
-        }
-
-        .card-text {
-        margin-bottom: 0.5rem;
-        }
-
-        .quimica {
-        color: #e91e63;
-        }
-
-        .fisica {
-        color: #3f51b5;
-        }
-
-        .programacao {
-        color: #9c27b0;
-        }
-
-        .redes {
-        color: #ffc107;
-        }
-
-        .marketing {
-        color: #009688;
-        }
-
-        .biologia {
-        color: #ff9800;
-        }
-
-        .matematica {
-        color: #f44336;
-        }
-
-        .matematica-financeira {
-        color: #8bc34a;
-        }
-
-        /* Adicionando estilo para o menu lateral */
-        .offcanvas-start {
-        background-color: #f8f9fa;
-        width: 250px;
-        }
-
-        .offcanvas-body {
-        padding: 20px;
-        }
-
-        /* Estilo para o dropdown do ícone do perfil */
-        .dropdown-menu-end {
-        right: 0;
-        left: auto;
-        }
-
-        .dropdown-item.text-danger {
-        color: red !important;
-        }
-
-        .btn-redondo {
-        border-radius: 50%;
-        position: fixed;
-        top: 85%;
-        left: 92%;
-        width: 50px;
-        height: 50px;
-        }
-    </style>
     <script>
         // Função para buscar o nome do monitor com base na matrícula
         function buscarNome() {
@@ -110,46 +33,10 @@
     </script>
 </head>
 <body>
-    <?php session_start(); ?>
-      <!-- Navbar -->
-  <nav class="navbar navbar-light bg-light px-3">
-    <div class="d-flex align-items-center">
-      <!-- Botão de Menu -->
-      <button class="btn btn-outline-secondary me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
-        <i class="bi bi-list"></i>
-      </button>
-      <a class="navbar-brand" href="monitorias.php">
-        <img src="imgs/mini_logo_iffar_c.png" alt="Logo Instituto Federal" width="30" height="30">
-        MoniTorrei
-      </a>
-    </div>
-    <!-- Ícone de Perfil -->
-    <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-decoration-none" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-        <?php echo $_SESSION['nome']; ?><i class="ms-3 bi bi-person-circle" style="font-size: 1.5rem;"></i>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-        <li><a class="dropdown-item text-danger" href="logout.php">Sair da conta</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- Menu Lateral (Offcanvas) -->
-  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
-    <div class="offcanvas-header">
-      <h5 id="offcanvasMenuLabel">Monitorias</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <ul class="list-group">
-
-        <a href="programacao.php">
-            <li class="list-group-item">Programação</li>
-        </a>
-
-      </ul>
-    </div>
-  </div>
+  <?php 
+    include('conexao.php');
+    include('navbar.php');
+  ?>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Adicionar Monitoria</h1>
         <form action="processa_monitoria.php" method="POST">
@@ -182,11 +69,11 @@
             <div class="mb-3">
                 <label for="curso" class="form-label">Curso</label>
                 <select class="form-select" id="curso" name="curso" required>
-                    <option value="todos" selected>Todos os cursos</option>
-                    <option value="administracao">Administração</option>
-                    <option value="alimentos">Alimentos</option>
-                    <option value="agropecuaria">Agropecuária</option>
-                    <option value="informatica">Informática</option>
+                    <option value="Todos os Cursos" selected>Todos os cursos</option>
+                    <option value="Administração">Administração</option>
+                    <option value="Alimentos">Alimentos</option>
+                    <option value="Agropecuária">Agropecuária</option>
+                    <option value="Informática">Informática</option>
                 </select>
             </div>
             <!-- Botão de envio -->

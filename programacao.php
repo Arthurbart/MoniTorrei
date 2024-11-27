@@ -44,95 +44,12 @@
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-light bg-light px-3">
-    <div class="d-flex align-items-center">
-      <!-- Botão de Menu -->
-      <button class="btn btn-outline-secondary me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
-        <i class="bi bi-list"></i>
-      </button>
-      <a class="navbar-brand" href="monitorias.php">
-        <img src="imgs/mini_logo_iffar_c.png" alt="Logo Instituto Federal" width="30" height="30">
-        MoniTorrei
-      </a>
-    </div>
-    <!-- Ícone de Perfil -->
-    <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-decoration-none" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-      <?php session_start(); echo $_SESSION['nome']; ?><i class="ms-3 bi bi-person-circle" style="font-size: 1.5rem;"></i>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-        <li><a class="dropdown-item text-danger" href="logout.php">Sair da conta</a></li>
-      </ul>
-    </div>
-  </nav>
+  <?php 
+    include('conexao.php');
+    include('navbar.php');
+    include('info_monitoria.php');
+  ?>
 
-  <!-- Menu Lateral (Offcanvas) -->
-  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
-    <div class="offcanvas-header">
-      <h5 id="offcanvasMenuLabel">Monitorias</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <ul class="list-group">
-      <a href="programacao.php">
-            <li class="list-group-item">Programação</li>
-        </a>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Banner -->
-  <div class="banner">
-    <div class="container py-4">
-      <div class="pt-4">
-        <h1>Programação</h1>
-        <p>Instituto Federal Farroupilha</p>
-      </div>
-      <img src="imgs/menina.png" alt="Monitor">
-    </div>
-  </div>
-
-  <!-- Informações da Monitoria -->
-  <div class="container my-4">
-    <div class="row">
-      <div class="col-md-3">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="card-title">Monitor</h5>
-            <p class="card-text">Nome do Monitor</p>
-            <h5 class="card-title">Local</h5>
-            <p class="card-text">Sala G6</p>
-            <h5 class="card-title">Horário</h5>
-            <p class="card-text pb-1 mb-1">Segunda, terça e quinta</p>
-            <p class="card-text pt-0 mt-0">12:45 PM</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-9">
-        <!-- Tabs de Comentários, Arquivos e Meus Pedidos -->
-        <ul class="nav nav-tabs" id="monitoriaTabs" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="comentarios-tab" data-bs-toggle="tab" data-bs-target="#comentarios" type="button" role="tab" aria-controls="comentarios" aria-selected="true">Comentários</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="arquivos-tab" data-bs-toggle="tab" data-bs-target="#arquivos" type="button" role="tab" aria-controls="arquivos" aria-selected="false">Arquivos</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="meus-pedidos-tab" data-bs-toggle="tab" data-bs-target="#meus-pedidos" type="button" role="tab" aria-controls="meus-pedidos" aria-selected="false">Meus Pedidos</button>
-          </li>
-        </ul>
-        <div class="tab-content mt-3" id="monitoriaTabsContent">
-          <!-- Comentários -->
-          <div class="tab-pane fade show active" id="comentarios" role="tabpanel" aria-labelledby="comentarios-tab">
-            <!-- Seção de Pedido de Conteúdo -->
-            <div class="mb-3">
-              <div class="input-group">
-                <span class="input-group-text"><i class="bi bi-person"></i></span>
-                <input type="text" class="form-control" placeholder="Solicitar conteúdo / material específico...">
-              </div>
-            </div>
-    
             <!-- Card de Avisos -->
             <div class="card mb-3">
               <div class="card-body">

@@ -1,11 +1,6 @@
 <?php
 // Conexão com o banco de dados
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "monitorrei";
-
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+include('conexao.php');
 
 // Verificar a conexão
 if (!$conn) {
