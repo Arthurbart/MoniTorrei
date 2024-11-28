@@ -13,7 +13,7 @@
   <!-- Ícone de Perfil -->
   <div class="dropdown">
     <a href="#" class="d-flex align-items-center text-decoration-none" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-      <?php echo $_SESSION['nome']; ?><i class="ms-3 bi bi-person-circle" style="font-size: 1.5rem;"></i>
+      <?php echo $_SESSION['nome_usuario']; ?><i class="ms-3 bi bi-person-circle" style="font-size: 1.5rem;"></i>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
       <li><a class="dropdown-item text-danger" href="logout.php">Sair da conta</a></li>

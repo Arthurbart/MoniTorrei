@@ -60,6 +60,11 @@
                 <label for="horario" class="form-label">Horário</label>
                 <input type="time" class="form-control" id="horario" name="horario" required>
             </div>
+            <!-- dias -->
+            <div class="mb-3">
+                <label for="dias" class="form-label">Dias de Funcionamento</label>
+                <input type="text" class="form-control" id="dias" name="dias" placeholder="Digite os dias da semana que a monitoria estará aberta" required>
+            </div>
             <!-- Local -->
             <div class="mb-3">
                 <label for="local" class="form-label">Local</label>

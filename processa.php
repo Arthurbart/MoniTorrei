@@ -32,7 +32,7 @@
       $user = mysqli_fetch_assoc($result);
       $_SESSION['usuario_id'] = $user['id']; 
       $_SESSION['cargo'] = $user['cargo']; 
-      $_SESSION['nome'] = $user['nome']; 
+      $_SESSION['nome_usuario'] = $user['nome']; 
       $_SESSION['curso'] = $user['curso']; 
       echo "
       <script>
