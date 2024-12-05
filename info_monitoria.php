@@ -112,12 +112,14 @@
               </div>
             </div>
           </div>
-        
           </div>
-          <!-- Meus Pedidos -->
+
+          <!-- PEDIDOS -->
+
           <div class="tab-pane fade" id="meus-pedidos" role="tabpanel" aria-labelledby="meus-pedidos-tab">
-            <!-- Seção de Pedido de Conteúdo -->
-            <div class="mb-3">
+
+          <!-- Seção de Pedido de Conteúdo -->
+          <div class="mb-3">
               <form action="processa_pedido.php" method="POST">
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-person"></i></span>
@@ -125,94 +127,62 @@
                   <button type="submit" class="form-control">Enviar</button>
                 </div>
               </form>
-            </div>
-            <!-- Exemplo de pedido -->
-            <div class="container mt-4">
-              <div class="card card-pedido mb-4">
-                <div class="card-body">
-                  <div class="d-flex align-items-center mb-3">
-                    <i class="bi bi-person pe-3"></i>
-                    <strong class="me-auto">Você</strong>
-                    <div class="dropdown">
-                      <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-three-dots"></i>
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">Editar</a></li>
-                        <li><a class="dropdown-item text-danger" href="#">Excluir</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <p class="card-text">Oi! Será que você poderia falar sobre Java na próxima monitoria? Se não conseguir, tudo bem. Agradeço desde já.</p>
-                  
-                  <div class="d-flex align-items-start mb-3">
-                    <div class="d-flex flex-column">
-                      <div class="d-flex align-items-center">
-                        <img src="imgs/menina.png" alt="Monitor" class="rounded-circle me-2" width="30" height="30">
-                        <strong class="me-2">Monitor respondeu:</strong>
+          </div>
+
+          <?php
+            $sql_pedidos = "SELECT id, conteudo, data_pedido, status, usuario_id 
+                            FROM pedidos_conteudo 
+                            WHERE monitoria_id = '$id_monitoria' AND usuario_id = '{$_SESSION['usuario_id']}'
+                            ORDER BY id DESC";
+
+
+            $result_pedidos = $conn->query($sql_pedidos);
+
+            if ($result_pedidos && $result_pedidos->num_rows > 0) {
+                while ($pedido = $result_pedidos->fetch_assoc()) {
+                    $pedinte = $pedido['usuario_id'];
+                    $conteudo = htmlspecialchars($pedido['conteudo']);
+                    $data_pedido = $pedido['data_pedido'] ? date('d/m/Y', strtotime($pedido['data_pedido'])) : 'Data inválida';
+                    $status = htmlspecialchars($pedido['status']);
+                    echo "
+                    <div class='container mt-4'>
+                      <div class='card card-pedido mb-4'>
+                        <div class='card-body'>
+                          <div class='d-flex justify-content-between mb-2'>
+                            <div>
+                                <i class='bi bi-person pe-3'></i>
+                                <strong>Você</strong>
+                                <br>
+                                <small class='text-muted'>$data_pedido</small>
+                            </div>
+                            <div class='dropdown'>
+                              <button class='btn btn-sm btn-light dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
+                                <i class='bi bi-three-dots'></i>
+                              </button>
+                              <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                <li>
+                                  <form action='excluir_pedido.php' method='POST' style='margin: 0;'>
+                                    <button class='dropdown-item text-danger' type='submit'>Excluir Pedido</button>
+                                  </form>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <p class='card-text'>$conteudo</p>
+                          <span class='badge bg-info'>$status</span>
+                        </div>
                       </div>
-                      <span class="pt-3">Olá! Você gostaria de aprender um conteúdo específico de JAVA?</span>
                     </div>
-                    
-                    <!-- Botão para mostrar a caixa de resposta, alinhado à direita -->
-                    <button class="btn btn-link ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#respostaForm" aria-expanded="false" aria-controls="respostaForm">
-                      <i class="bi bi-arrow-return-left"></i>
-                    </button>
-                  </div>
-                  
-                  <!-- Caixa de resposta oculta que aparece ao clicar no botão -->
-                  <div class="collapse" id="respostaForm">
-                    <div class="input-group mt-2">
-                      <input type="text" class="form-control" placeholder="Digite sua resposta...">
-                      <button class="btn btn-primary" type="button">Enviar</button>
-                    </div>
-                  </div>
+                    ";
+                }
+            } else {
+                echo "
+                <div class='alert alert-info' role='alert'>
+                    Nenhum pedido foi feito para esta monitoria ainda.
                 </div>
-              </div>
-            </div>
-            <div class="container mt-4">
-              <div class="card card-pedido mb-4">
-                <div class="card-body">
-                  <div class="d-flex align-items-center mb-3">
-                    <i class="bi bi-person pe-3"></i>
-                    <strong class="me-auto">Você</strong>
-                    <div class="dropdown">
-                      <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-three-dots"></i>
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">Editar</a></li>
-                        <li><a class="dropdown-item text-danger" href="#">Excluir</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <p class="card-text">oii, você poderia ver para mim algumas questões sobre PHP, vou ter prova semana que vem e queria estar sabendo...</p>
-                  
-                  <div class="d-flex align-items-start mb-3">
-                    <div class="d-flex flex-column">
-                      <div class="d-flex align-items-center">
-                        <img src="imgs/menina.png" alt="Monitor" class="rounded-circle me-2" width="30" height="30">
-                        <strong class="me-2">Monitor respondeu:</strong>
-                      </div>
-                      <span class="pt-3">Olá! Pode deixar!</span>
-                    </div>
-                    
-                    <!-- Botão para mostrar a caixa de resposta, alinhado à direita -->
-                    <button class="btn btn-link ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#respostaForm1" aria-expanded="false" aria-controls="respostaForm">
-                      <i class="bi bi-arrow-return-left"></i>
-                    </button>
-                  </div>
-                  
-                  <!-- Caixa de resposta oculta que aparece ao clicar no botão -->
-                  <div class="collapse" id="respostaForm1">
-                    <div class="input-group mt-2">
-                      <input type="text" class="form-control" placeholder="Digite sua resposta...">
-                      <button class="btn btn-primary" type="button">Enviar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                ";
+            }
+          ?>
           </div>
       </div>
     </div>
