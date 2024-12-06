@@ -74,11 +74,26 @@
                         echo "
                         <div class='card mb-3'>
                             <div class='card-body'>
-                                <div class='d-flex align-items-center mb-2'>
-                                    <img src='imgs/menina.png' alt='Monitor' class='rounded-circle me-2' width='40' height='40'>
-                                    <div>
-                                        <h6 class='card-title mb-0'>$monitor_nome</h6>
-                                        <small class='text-muted'>$data_aviso</small>
+                                <div class='d-flex justify-content-between mb-2'>
+                                    <div class='d-flex'>
+                                        <img src='imgs/menina.png' alt='Monitor' class='rounded-circle me-2' width='40' height='40'>
+                                        <div>
+                                          <h6 class='card-title mb-0'>$monitor_nome</h6>
+                                          <small class='text-muted'>$data_aviso</small>
+                                        </div>
+                                    </div>
+                                    <div class='dropdown'>
+                                      <button class='btn btn-sm btn-light dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
+                                        <i class='bi bi-three-dots'></i>
+                                      </button>
+                                      <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                        <li>
+                                          <form action='excluir_aviso.php' method='POST' style='margin: 0;'>
+                                            <input type='hidden' name='aviso_id' value='$aviso_id'>
+                                            <button class='dropdown-item text-danger' type='submit' onclick=\"return confirm('Tem certeza que deseja excluir este pedido?');\">Excluir Pedido</button>
+                                          </form>
+                                        </li>
+                                      </ul>
                                     </div>
                                 </div>
                                 <p class='card-text'>$conteudo</p>
@@ -167,11 +182,19 @@
 
                 if ($result_pedidos && $result_pedidos->num_rows > 0) {
                     while ($pedido = $result_pedidos->fetch_assoc()) {
+                        $pedinte_id = htmlspecialchars($pedido['usuario_id']);
                         $pedido_id = htmlspecialchars($pedido['id']);
                         $conteudo = htmlspecialchars($pedido['conteudo']);
                         $data_pedido = $pedido['data_pedido'] ? date('d/m/Y', strtotime($pedido['data_pedido'])) : 'Data inválida';
                         $status = htmlspecialchars($pedido['status']);
 
+                        $sql_pedinte = "SELECT nome
+                        FROM usuario 
+                        WHERE id = '$pedinte_id'
+                        ORDER BY id DESC";  
+                        $result_pedinte = $conn->query($sql_pedinte);
+                        $pedinte_nome = $result_pedinte->fetch_assoc()['nome'];
+                      
                         echo "
                         <div class='container mt-4'>
                             <div class='card card-pedido mb-4'>
@@ -179,7 +202,7 @@
                                     <div class='d-flex justify-content-between mb-2'>
                                         <div>
                                             <i class='bi bi-person pe-3'></i>
-                                            <strong>Você</strong>
+                                            <strong>$pedinte_nome</strong>
                                             <br>
                                             <small class='text-muted'>$data_pedido</small>
                                         </div>

@@ -6,7 +6,7 @@
     <title>Adicionar Monitoria</title>
     <!-- Link para o Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <script>
         // Função para buscar o nome do monitor com base na matrícula
         function buscarNome() {
@@ -37,56 +37,97 @@
     include('conexao.php');
     include('navbar.php');
   ?>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Adicionar Monitoria</h1>
-        <form action="processa_monitoria.php" method="POST">
-            <!-- Nome da monitoria -->
-            <div class="mb-3">
-                <label for="nomeMonitoria" class="form-label">Nome da Monitoria</label>
-                <input type="text" class="form-control" id="nomeMonitoria" name="nome_monitoria" placeholder="Digite o nome da monitoria" required>
-            </div>
-            <!-- Matrícula do monitor -->
-            <div class="mb-3">
-                <label for="matriculaMonitor" class="form-label">Matrícula do Monitor</label>
-                <input type="text" class="form-control" id="matriculaMonitor" name="matricula_monitor" placeholder="Digite a matrícula do monitor" onblur="buscarNome()" required>
-            </div>
-            <!-- Nome do monitor (preenchido automaticamente) -->
-            <div class="mb-3">
-                <label for="nomeMonitor" class="form-label">Nome do Monitor</label>
-                <input type="text" class="form-control" id="nomeMonitor" name="nome_monitor" placeholder="Nome do monitor" readonly required>
-            </div>
-            <!-- Horário -->
-            <div class="mb-3">
-                <label for="horario" class="form-label">Horário</label>
-                <input type="time" class="form-control" id="horario" name="horario" required>
-            </div>
-            <!-- dias -->
-            <div class="mb-3">
-                <label for="dias" class="form-label">Dias de Funcionamento</label>
-                <input type="text" class="form-control" id="dias" name="dias" placeholder="Digite os dias da semana que a monitoria estará aberta" required>
-            </div>
-            <!-- Local -->
-            <div class="mb-3">
-                <label for="local" class="form-label">Local</label>
-                <input type="text" class="form-control" id="local" name="local" placeholder="Digite o local da monitoria" required>
-            </div>
-            <!-- Curso -->
-            <div class="mb-3">
-                <label for="curso" class="form-label">Curso</label>
-                <select class="form-select" id="curso" name="curso" required>
-                    <option value="Todos os Cursos" selected>Todos os cursos</option>
-                    <option value="Administração">Administração</option>
-                    <option value="Alimentos">Alimentos</option>
-                    <option value="Agropecuária">Agropecuária</option>
-                    <option value="Informática">Informática</option>
-                </select>
-            </div>
-            <!-- Botão de envio -->
-            <button type="submit" class="btn btn-primary w-100">Adicionar Monitoria</button>
-        </form>
-    </div>
 
-    <!-- Link para o Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <div class="container mt-5">
+    <!-- Nav Tabs -->
+    <ul class="nav nav-tabs" id="monitoriaTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="adicionar-tab" data-bs-toggle="tab" data-bs-target="#adicionar" type="button" role="tab" aria-controls="adicionar" aria-selected="true">Adicionar Monitoria</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="remover-tab" data-bs-toggle="tab" data-bs-target="#remover" type="button" role="tab" aria-controls="remover" aria-selected="false">Remover Monitoria</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="adc-tab" data-bs-toggle="tab" data-bs-target="#adc" type="button" role="tab" aria-controls="adc" aria-selected="false">Adicionar Aluno</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="rmv-tab" data-bs-toggle="tab" data-bs-target="#rmv" type="button" role="tab" aria-controls="rmv" aria-selected="false">Remover Aluno</button>
+        </li>
+    </ul>
+
+    <!-- Tab content -->
+    <div class="tab-content mt-3">
+        <!-- Adicionar Monitoria -->
+        <div class="tab-pane fade show active" id="adicionar" role="tabpanel" aria-labelledby="adicionar-tab">
+            <h1 class="text-center mb-4">Adicionar Monitoria</h1>
+            <form action="processa_monitoria.php" method="POST">
+                <!-- Nome da monitoria -->
+                <div class="mb-3">
+                    <label for="nomeMonitoria" class="form-label">Nome da Monitoria</label>
+                    <input type="text" class="form-control" id="nomeMonitoria" name="nome_monitoria" placeholder="Digite o nome da monitoria" required>
+                </div>
+                <!-- Matrícula do monitor -->
+                <div class="mb-3">
+                    <label for="matriculaMonitor" class="form-label">Matrícula do Monitor</label>
+                    <input type="text" class="form-control" id="matriculaMonitor" name="matricula_monitor" placeholder="Digite a matrícula do monitor" onblur="buscarNome()" required>
+                </div>
+                <!-- Nome do monitor (preenchido automaticamente) -->
+                <div class="mb-3">
+                    <label for="nomeMonitor" class="form-label">Nome do Monitor</label>
+                    <input type="text" class="form-control" id="nomeMonitor" name="nome_monitor" placeholder="Nome do monitor" readonly required>
+                </div>
+                <!-- Horário -->
+                <div class="mb-3">
+                    <label for="horario" class="form-label">Horário</label>
+                    <input type="time" class="form-control" id="horario" name="horario" required>
+                </div>
+                <!-- Dias -->
+                <div class="mb-3">
+                    <label for="dias" class="form-label">Dias de Funcionamento</label>
+                    <input type="text" class="form-control" id="dias" name="dias" placeholder="Digite os dias da semana que a monitoria estará aberta" required>
+                </div>
+                <!-- Local -->
+                <div class="mb-3">
+                    <label for="local" class="form-label">Local</label>
+                    <input type="text" class="form-control" id="local" name="local" placeholder="Digite o local da monitoria" required>
+                </div>
+                <!-- Curso -->
+                <div class="mb-3">
+                    <label for="curso" class="form-label">Curso</label>
+                    <select class="form-select" id="curso" name="curso" required>
+                        <option value="Todos os Cursos" selected>Todos os cursos</option>
+                        <option value="Administração">Administração</option>
+                        <option value="Alimentos">Alimentos</option>
+                        <option value="Agropecuária">Agropecuária</option>
+                        <option value="Informática">Informática</option>
+                    </select>
+                </div>
+                <!-- Botão de envio -->
+                <button type="submit" class="btn btn-primary w-100">Adicionar Monitoria</button>
+            </form>
+        </div>
+
+        <!-- Remover Monitoria -->
+        <div class="tab-pane fade" id="remover" role="tabpanel" aria-labelledby="remover-tab">
+            <h3>Remover Monitoria</h3>
+            <!-- Adicione o conteúdo para remover monitoria aqui -->
+        </div>
+
+        <!-- Adicionar Aluno -->
+        <div class="tab-pane fade" id="adc" role="tabpanel" aria-labelledby="adc-tab">
+            <h3>Adicionar Aluno</h3>
+            <!-- Adicione o conteúdo para adicionar aluno aqui -->
+        </div>
+
+        <!-- Remover Aluno -->
+        <div class="tab-pane fade" id="rmv" role="tabpanel" aria-labelledby="rmv-tab">
+            <h3>Remover Aluno</h3>
+            <!-- Adicione o conteúdo para remover aluno aqui -->
+        </div>
+    </div>
+  </div>
+
+  <!-- Link para o Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

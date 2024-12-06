@@ -6,6 +6,7 @@
   <title>MoniTorrei - Monitorias</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="style.css">
   <style>
     /* Estilo do layout dos cards */
     .card {
@@ -20,10 +21,6 @@
 
     .card-text {
       margin-bottom: 0.5rem;
-    }
-
-    .programacao {
-      color: #9c27b0;
     }
 
     /* Adicionando estilo para o menu lateral */
