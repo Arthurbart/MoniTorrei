@@ -44,35 +44,45 @@
           <!-- Comentários -->
           <div class="tab-pane fade show active" id="comentarios" role="tabpanel" aria-labelledby="comentarios-tab">
 
-            
-            <!-- Card de Avisos -->
-            <div class="card mb-3">
-              <div class="card-body">
-                <div class="d-flex align-items-center mb-2">
-                  <img src="imgs/menina.png" alt="Monitor" class="rounded-circle me-2" width="40" height="40">
-                  <div>
-                    <h6 class="card-title mb-0">Nome do Monitor</h6>
-                    <small class="text-muted">07:38 AM</small>
-                  </div>
-                </div>
-                <p class="card-text">Bom dia! Vou me atrasar um pouquinho hoje, começamos 12:50 PM. :)</p>
-              </div>
-            </div>
-    
-            <!-- Outro Card de Avisos -->
-            <div class="card mb-3">
-              <div class="card-body">
-                <div class="d-flex align-items-center mb-2">
-                  <img src="imgs/menina.png" alt="Monitor" class="rounded-circle me-2" width="40" height="40">
-                  <div>
-                    <h6 class="card-title mb-0">Nome do Monitor</h6>
-                    <small class="text-muted">07/10/24</small>
-                  </div>
-                </div>
-                <p class="card-text">Bom dia, pessoal! Não vou poder comparecer hoje, fica para terça-feira.</p>
-              </div>
-            </div>
+            <?php
+                $sql_avisos = "SELECT id, conteudo, data_aviso, usuario_id 
+                                FROM avisos 
+                                WHERE monitoria_id = '$id_monitoria'
+                                ORDER BY id DESC";
+
+                $result_avisos = $conn->query($sql_avisos);
+
+                if ($result_avisos && $result_avisos->num_rows > 0) {
+                    while ($aviso = $result_avisos->fetch_assoc()) {
+                        $aviso_id = htmlspecialchars($aviso['id']);
+                        $conteudo = htmlspecialchars($aviso['conteudo']);
+                        $data_aviso = $aviso['data_aviso'] ? date('d/m/Y', strtotime($aviso['data_aviso'])) : 'Data inválida';
+
+                        echo "
+                        <div class='card mb-3'>
+                            <div class='card-body'>
+                                <div class='d-flex align-items-center mb-2'>
+                                    <img src='imgs/menina.png' alt='Monitor' class='rounded-circle me-2' width='40' height='40'>
+                                    <div>
+                                        <h6 class='card-title mb-0'>$monitor_nome</h6>
+                                        <small class='text-muted'>$data_aviso</small>
+                                    </div>
+                                </div>
+                                <p class='card-text'>$conteudo</p>
+                            </div>
+                        </div>
+                        ";
+                    }
+                } else {
+                    echo "
+                    <div class='alert alert-info' role='alert'>
+                        Nenhum comentario foi feito para esta monitoria ainda.
+                    </div>
+                    ";
+                }
+            ?>
           </div>
+
           <!-- Arquivos -->
           <div class="tab-pane fade" id="arquivos" role="tabpanel" aria-labelledby="arquivos-tab">
             <div class="card mb-3">
@@ -140,6 +150,7 @@
 
             if ($result_pedidos && $result_pedidos->num_rows > 0) {
                 while ($pedido = $result_pedidos->fetch_assoc()) {
+                    $pedido_id = htmlspecialchars($pedido['id']);
                     $pedinte = $pedido['usuario_id'];
                     $conteudo = htmlspecialchars($pedido['conteudo']);
                     $data_pedido = $pedido['data_pedido'] ? date('d/m/Y', strtotime($pedido['data_pedido'])) : 'Data inválida';
@@ -162,7 +173,8 @@
                               <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                                 <li>
                                   <form action='excluir_pedido.php' method='POST' style='margin: 0;'>
-                                    <button class='dropdown-item text-danger' type='submit'>Excluir Pedido</button>
+                                    <input type='hidden' name='pedido_id' value='$pedido_id'>
+                                    <button class='dropdown-item text-danger' type='submit' onclick=\"return confirm('Tem certeza que deseja excluir este pedido?');\">Excluir Pedido</button>
                                   </form>
                                 </li>
                               </ul>
