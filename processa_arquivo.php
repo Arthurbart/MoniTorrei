@@ -1,5 +1,4 @@
 <?php
-session_start();
 include('conexao.php');
 
 // Verifica se o formulário foi enviado via POST
@@ -22,13 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Valida e move o arquivo enviado
     if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
-        $nome_arquivo = $_FILES['arquivo']['name'];
+        $nome_arquivo = $id_monitoria . "_" . $_FILES['arquivo']['name'];
         $caminho_temporario = $_FILES['arquivo']['tmp_name'];
         $destino = "uploads/" . basename($nome_arquivo);
 
         if (move_uploaded_file($caminho_temporario, $destino)) {
             // Insere o registro no banco de dados
-            $sql = "INSERT INTO documentos (descricao, monitoria_id, usuario_id, data_pedido, doc, tipo) 
+            $sql = "INSERT INTO documentos (descricao, monitoria_id, usuario_id, data_postagem, doc, tipo) 
                     VALUES ('$descricao', '$id_monitoria', '$usuario_id', NOW(), '$nome_arquivo', '$tipo')";
 
             if ($conn->query($sql) === TRUE) {
