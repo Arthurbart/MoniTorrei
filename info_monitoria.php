@@ -1,4 +1,3 @@
-  <!-- Banner -->
   <div class="banner">
     <div class="container py-4">
       <div class="pt-4">
@@ -9,7 +8,6 @@
     </div>
   </div>
 
-  <!-- Informações da Monitoria -->
   <div class="container my-4">
     <div class="row">
       <div class="col-md-3">
@@ -28,6 +26,7 @@
         </div>
       </div>
       <div class="col-md-9">
+
         <!-- Tabs de Comentários, Arquivos e Meus Pedidos -->
         <ul class="nav nav-tabs" id="monitoriaTabs" role="tablist">
           <li class="nav-item" role="presentation">
@@ -41,6 +40,7 @@
           </li>
         </ul>
         <div class="tab-content mt-3" id="monitoriaTabsContent">
+
           <!-- Comentários -->
           <div class="tab-pane fade show active" id="comentarios" role="tabpanel" aria-labelledby="comentarios-tab">
 
@@ -86,7 +86,6 @@
           <!-- Arquivos -->
           <div class="tab-pane fade" id="arquivos" role="tabpanel" aria-labelledby="arquivos-tab">
             <?php
-            // Consulta para pegar os documentos da monitoria
             $sql_documentos = "SELECT d.id, d.descricao, d.doc, d.tipo, d.data_postagem, u.nome as usuario_nome 
                           FROM documentos d
                           JOIN usuario u ON d.usuario_id = u.id
@@ -103,10 +102,8 @@
                 $data_postagem = $documento['data_postagem'] ? date('d/m/Y', strtotime($documento['data_postagem'])) : 'Data inválida';
                 $usuario_nome = htmlspecialchars($documento['usuario_nome']);
 
-                // Define a cor do badge de acordo com o tipo
                 $badge_class = $tipo == 'Atividade' ? 'bg-danger' : 'bg-primary';
 
-                // Exibe o card do documento
                 echo "
                     <div class='card mb-3'>
                         <div class='card-body'>
@@ -141,7 +138,6 @@
 
           <div class="tab-pane fade" id="meus-pedidos" role="tabpanel" aria-labelledby="meus-pedidos-tab">
 
-            <!-- Seção de Pedido de Conteúdo -->
             <div class="mb-3">
               <form action="processa_pedido.php" method="POST">
                 <div class="input-group">

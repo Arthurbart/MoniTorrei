@@ -284,8 +284,76 @@
             }
             ?>
           </div>
+          <div class="tab-pane fade" id="chamada" role="tabpanel" aria-labelledby="chamada-tab">
+    <div class="d-flex justify-content-center">
+        <div class="col-6">
+            <!-- Botão para abrir o modal -->
+            <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#monitoriaModal">
+                Nova Monitoria
+            </button>
+        </div>
+    </div>
+</div>
 
-
+          <!-- Modal -->
+          <div class="modal fade" id="monitoriaModal" tabindex="-1" aria-labelledby="monitoriaModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="monitoriaModalLabel">Nova Monitoria</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <!-- Formulário dentro do modal -->
+                  <form>
+                    <div class="form-group">
+                      <label for="data">Data</label>
+                      <input type="date" class="form-control" id="data" name="data" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="matricula">Matrícula</label>
+                      <input type="text" class="form-control" id="matricula" name="matricula" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="nomeMonitor" class="form-label">Nome do Aluno</label>
+                      <input type="text" class="form-control" id="nomeMonitor" name="nome_monitor" placeholder="Nome do aluno" readonly required>
+                    </div>
+                    <div class="form-group">
+                      <label for="comentario">Comentário sobre o Aluno</label>
+                      <textarea class="form-control" id="comentario" name="comentario" rows="4" required></textarea>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                  <button type="button" class="btn btn-primary">Salvar Monitoria</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <script>
+      function buscarNome() {
+          const matricula = document.getElementById('matriculaMonitor').value;
+
+          if (matricula) {
+              fetch(`buscar_monitor.php?matricula=${matricula}`)
+                  .then(response => response.json())
+                  .then(data => {
+                      if (data.sucesso) {
+                          document.getElementById('nomeMonitor').value = data.nome;
+                      } else {
+                          alert('Matrícula não encontrada!');
+                          document.getElementById('nomeMonitor').value = '';
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Erro na busca:', error);
+                  });
+          } else {
+              document.getElementById('nomeMonitor').value = '';
+          }
+      }
+    </script>
