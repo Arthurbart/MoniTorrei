@@ -1,7 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario_id'])) {
-    header("Location: index.html");
+    echo "
+    <script>
+        alert('Usuario não logado');
+          window.location.href = 'index.html';
+    </script>";
     exit();
 }
 

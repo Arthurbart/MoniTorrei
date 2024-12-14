@@ -57,16 +57,7 @@
   <?php 
     include('conexao.php');
     include('navbar.php');
-    if (!isset($_SESSION['usuario_id'])) {
-      echo"
-      <script>
-      alert('Você não está logado, direcionando para página de login...');
-      window.location.href = 'index.html';
-      </script>";
-      exit;
-    }
-
-    // Consulta para obter as monitorias ativas e o nome do usuário
+    
     $sql = "
       SELECT 
         m.id, 

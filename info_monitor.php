@@ -147,7 +147,7 @@
                 </div>
               </form>
             </div>
-            
+
             <?php
             // Consulta para pegar os documentos da monitoria
             $sql_documentos = "SELECT d.id, d.descricao, d.doc, d.tipo, d.data_postagem, u.nome as usuario_nome 
@@ -284,76 +284,232 @@
             }
             ?>
           </div>
-          <div class="tab-pane fade" id="chamada" role="tabpanel" aria-labelledby="chamada-tab">
-    <div class="d-flex justify-content-center">
-        <div class="col-6">
-            <!-- Botão para abrir o modal -->
-            <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#monitoriaModal">
-                Nova Monitoria
-            </button>
-        </div>
-    </div>
-</div>
 
-          <!-- Modal -->
-          <div class="modal fade" id="monitoriaModal" tabindex="-1" aria-labelledby="monitoriaModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="monitoriaModalLabel">Nova Monitoria</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <!-- Formulário dentro do modal -->
-                  <form>
-                    <div class="form-group">
-                      <label for="data">Data</label>
-                      <input type="date" class="form-control" id="data" name="data" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="matricula">Matrícula</label>
-                      <input type="text" class="form-control" id="matricula" name="matricula" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="nomeMonitor" class="form-label">Nome do Aluno</label>
-                      <input type="text" class="form-control" id="nomeMonitor" name="nome_monitor" placeholder="Nome do aluno" readonly required>
-                    </div>
-                    <div class="form-group">
-                      <label for="comentario">Comentário sobre o Aluno</label>
-                      <textarea class="form-control" id="comentario" name="comentario" rows="4" required></textarea>
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                  <button type="button" class="btn btn-primary">Salvar Monitoria</button>
+          <div class="tab-pane fade" id="chamada" role="tabpanel" aria-labelledby="chamada-tab">
+
+            <div class="d-flex justify-content-center">
+              <div class="col-6">
+                <!-- Botão para abrir o modal -->
+                <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#monitoriaModal">
+                  Nova Monitoria
+                </button>
+              </div>
+            </div>
+
+            <div class="container mt-3">
+              <?php
+              $query_dias = "SELECT DISTINCT data_presenca FROM presencas WHERE monitoria_id = ? ORDER BY data_presenca DESC";
+              $stmt_dias = $conn->prepare($query_dias);
+
+              if ($stmt_dias) {
+                $stmt_dias->bind_param('i', $id_monitoria);
+                $stmt_dias->execute();
+
+                $result_dias = $stmt_dias->get_result();
+                if ($result_dias) {
+                  $dias_monitoria = [];
+                  while ($row = $result_dias->fetch_assoc()) {
+                    $dias_monitoria[] = $row['data_presenca'];
+                  }
+
+
+                  $stmt_dias->close();
+                } else {
+                  echo "Erro ao obter os dias de monitoria.";
+                  exit();
+                }
+              } else {
+                echo "Erro ao preparar a consulta para buscar os dias de monitoria.";
+                exit();
+              }
+              if (!empty($dias_monitoria)) {
+                foreach ($dias_monitoria as $dia) {
+                  $dia_formatado = date('d/m/Y', strtotime($dia));
+                  echo "<div class='card mb-3'>
+                            <div class='card-header'>
+                                <strong>Monitoria do dia " . htmlspecialchars($dia_formatado) . "</strong>
+                                <!-- Dropdown para excluir o dia inteiro -->
+                                <div class='dropdown float-end'>
+                                    <button class='btn btn-sm btn-danger dropdown-toggle' type='button' id='dropdownMenuButtonDia' data-bs-toggle='dropdown' aria-expanded='false'>
+                                        <i class='bi bi-trash'></i>
+                                    </button>
+                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButtonDia'>
+                                        <li>
+                                            <form action='remover_dia.php' method='POST' style='margin: 0;'>
+                                                <input type='hidden' name='dia_presenca' value='" . htmlspecialchars($dia) . "'>
+                                                <input type='hidden' name='monitoria_id' value='" . htmlspecialchars($id_monitoria) . "'>
+                                                <button class='dropdown-item text-danger' type='submit' onclick=\"return confirm('Tem certeza que deseja excluir toda a chamada deste dia?');\">
+                                                    Excluir Dia Inteiro
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class='card-body'>";
+
+                  $query_alunos = "SELECT u.id, u.nome, u.matricula FROM presencas p 
+                                     INNER JOIN usuario u ON p.usuario_id = u.id 
+                                     WHERE p.monitoria_id = ? AND p.data_presenca = ?";
+                  $stmt_alunos = $conn->prepare($query_alunos);
+
+                  if ($stmt_alunos) {
+                    $stmt_alunos->bind_param('is', $id_monitoria, $dia);
+                    $stmt_alunos->execute();
+                    $result_alunos = $stmt_alunos->get_result();
+
+                    if ($result_alunos) {
+                      echo "<ul class='list-group'>";
+                      while ($aluno = $result_alunos->fetch_assoc()) {
+                        echo "<li class='list-group-item'>" . htmlspecialchars($aluno['nome']) . " (" . htmlspecialchars($aluno['matricula']) . ")";
+
+                        // Dropdown para remover aluno da chamada
+                        echo "<div class='dropdown float-end'>
+                                        <button class='btn btn-sm btn-light dropdown-toggle' type='button' id='dropdownMenuButtonAluno' data-bs-toggle='dropdown' aria-expanded='false'>
+                                            <i class='bi bi-three-dots'></i>
+                                        </button>
+                                        <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButtonAluno'>
+                                            <li>
+                                                <form action='remover_aluno.php' method='POST' style='margin: 0;'>
+                                                    <input type='hidden' name='aluno_id' value='" . htmlspecialchars($aluno['id']) . "'>
+                                                    <input type='hidden' name='dia_presenca' value='" . htmlspecialchars($dia) . "'>
+                                                    <button class='dropdown-item text-danger' type='submit' onclick=\"return confirm('Tem certeza que deseja remover este aluno da chamada?');\">
+                                                        Remover Aluno
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                      </div>";
+
+                        echo "</li>";
+                      }
+                      echo "</ul>";
+                      $stmt_alunos->close();
+                    } else {
+                      echo "Erro ao buscar alunos presentes.";
+                    }
+                  } else {
+                    echo "Erro ao preparar a consulta para buscar alunos.";
+                  }
+
+                  echo "<button class='btn btn-success mt-3' data-bs-toggle='modal' 
+                            data-bs-target='#addAlunoModal' 
+                            data-dia='" . htmlspecialchars($dia) . "'>
+                                Adicionar Aluno
+                          </button>
+                        </div>
+                    </div>";
+                }
+              } else {
+                echo "<div class='alert alert-info'>Nenhuma monitoria encontrada.</div>";
+              }
+              ?>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="monitoriaModal" tabindex="-1" aria-labelledby="monitoriaModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="monitoriaModalLabel">Nova Monitoria</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- Formulário dentro do modal -->
+                    <form method="POST" action="processa_chamada.php">
+                      <div class="form-group">
+                        <label for="data">Data</label>
+                        <input type="date" class="form-control" id="data" name="data" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="matriculaMonitor">Matrícula do Aluno</label>
+                        <input type="text" class="form-control" id="matriculaMonitor" name="matricula_monitor" placeholder="Digite a matrícula do monitor" onblur="buscarNome()" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="nomeMonitor">Nome do Aluno</label>
+                        <input type="text" class="form-control" id="nomeMonitor" name="nome_monitor" placeholder="Nome do aluno" readonly required>
+                      </div>
+                      <div class="form-group">
+                        <label for="comentario">Feedback do Aluno</label>
+                        <textarea class="form-control" id="comentario" name="comentario" rows="4" required></textarea>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Novo Dia</button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
+            <!-- Modal para adicionar aluno -->
+            <div class="modal fade" id="addAlunoModal" tabindex="-1" aria-labelledby="addAlunoLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <form method="POST" action="processa_chamada.php">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="addAlunoLabel">Adicionar Aluno</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <input type="hidden" name="data" id="dataMonitoria">
+                      <div class="form-group">
+                        <label for="matriculaMonitor">Matrícula do Aluno</label>
+                        <input type="text" class="form-control" id="matriculaMonitor" name="matricula_monitor" placeholder="Digite a matrícula do monitor" onblur="buscarNome()" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="nomeMonitor">Nome do Aluno</label>
+                        <input type="text" class="form-control" id="nomeMonitor" name="nome_monitor" placeholder="Nome do aluno" readonly required>
+                      </div>
+                      <div class="form-group">
+                        <label for="comentario">Feedback do Aluno</label>
+                        <textarea class="form-control" id="comentario" name="comentario" rows="4" required></textarea>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Novo Dia</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
           </div>
         </div>
       </div>
-    </div>
-    <script>
-      function buscarNome() {
+      <script>
+        function buscarNome() {
           const matricula = document.getElementById('matriculaMonitor').value;
 
           if (matricula) {
-              fetch(`buscar_monitor.php?matricula=${matricula}`)
-                  .then(response => response.json())
-                  .then(data => {
-                      if (data.sucesso) {
-                          document.getElementById('nomeMonitor').value = data.nome;
-                      } else {
-                          alert('Matrícula não encontrada!');
-                          document.getElementById('nomeMonitor').value = '';
-                      }
-                  })
-                  .catch(error => {
-                      console.error('Erro na busca:', error);
-                  });
+            fetch(`buscar_monitor.php?matricula=${matricula}`)
+              .then(response => response.json())
+              .then(data => {
+                if (data.sucesso) {
+                  document.getElementById('nomeMonitor').value = data.nome;
+                } else {
+                  alert('Matrícula não encontrada!');
+                  document.getElementById('nomeMonitor').value = '';
+                }
+              })
+              .catch(error => {
+                console.error('Erro na busca:', error);
+              });
           } else {
-              document.getElementById('nomeMonitor').value = '';
+            document.getElementById('nomeMonitor').value = '';
           }
-      }
-    </script>
+        }
+      </script>
+      <script>
+        // Preencher o campo de data no modal
+        var addAlunoModal = document.getElementById('addAlunoModal');
+        addAlunoModal.addEventListener('show.bs.modal', function(event) {
+          var button = event.relatedTarget; // Botão que abriu o modal
+          var data = button.getAttribute('data-dia'); // Obter a data associada
+          var inputData = document.getElementById('dataMonitoria'); // Campo hidden no modal
+          inputData.value = data; // Definir o valor do campo
+        });
+      </script>
