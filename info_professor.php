@@ -80,7 +80,15 @@
             ?>
           </div>
           <div class="tab-pane fade" id="chamada" role="tabpanel" aria-labelledby="chamada-tab">
-
+            <div class='card mb-3'>
+              <div class='card-header'>
+                <p class='card-text text-center'>Relatório da Chamada</p>
+                <div class='d-flex align-items-center justify-content-center'>
+                  <i class='bi bi-file-earmark-pdf fs-4 text-danger me-2'></i>
+                  <a href='relatorio.php?id_monitoria=<?php echo $id_monitoria; ?>' class='text-decoration-none' target='_blank'>Gerar Relatório</a>
+                </div>
+              </div>
+            </div>
 
             <div class="container mt-3">
               <?php
@@ -139,6 +147,8 @@
 
                         echo "</li>";
                       }
+                      echo "</div>";
+                      echo "</div>";
                       echo "</ul>";
                       $stmt_alunos->close();
                     } else {

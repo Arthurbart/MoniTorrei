@@ -406,32 +406,31 @@
               ?>
             </div>
 
-            <!-- Modal -->
+            <!-- Modal para criar novo dia -->
             <div class="modal fade" id="monitoriaModal" tabindex="-1" aria-labelledby="monitoriaModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="monitoriaModalLabel">Nova Monitoria</h5>
+                    <h5 class="modal-title" id="monitoriaModalLabel">Criar Novo Dia</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    <!-- Formulário dentro do modal -->
-                    <form method="POST" action="processa_chamada.php">
+                    <form method="POST" action="processa_chamada.php" id="formNovoDia" onsubmit="limparFormulario(event, 'formNovoDia')">
                       <div class="form-group">
                         <label for="data">Data</label>
                         <input type="date" class="form-control" id="data" name="data" required>
                       </div>
                       <div class="form-group">
-                        <label for="matriculaMonitor">Matrícula do Aluno</label>
-                        <input type="text" class="form-control" id="matriculaMonitor" name="matricula_monitor" placeholder="Digite a matrícula do monitor" onblur="buscarNome()" required>
+                        <label for="matriculaMonitorNovoDia">Matrícula do Aluno</label>
+                        <input type="text" class="form-control" id="matriculaMonitorNovoDia" name="matricula_monitor" placeholder="Digite a matrícula do aluno" onblur="buscarNome('NovoDia')" required>
                       </div>
                       <div class="form-group">
-                        <label for="nomeMonitor">Nome do Aluno</label>
-                        <input type="text" class="form-control" id="nomeMonitor" name="nome_monitor" placeholder="Nome do aluno" readonly required>
+                        <label for="nomeMonitorNovoDia">Nome do Aluno</label>
+                        <input type="text" class="form-control" id="nomeMonitorNovoDia" name="nome_monitor" placeholder="Nome do aluno" readonly required>
                       </div>
                       <div class="form-group">
-                        <label for="comentario">Feedback do Aluno</label>
-                        <textarea class="form-control" id="comentario" name="comentario" rows="4" required></textarea>
+                        <label for="comentarioNovoDia">Feedback do Aluno</label>
+                        <textarea class="form-control" id="comentarioNovoDia" name="comentario" rows="4" required></textarea>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -442,32 +441,33 @@
                 </div>
               </div>
             </div>
+
             <!-- Modal para adicionar aluno -->
-            <div class="modal fade" id="addAlunoModal" tabindex="-1" aria-labelledby="addAlunoLabel" aria-hidden="true">
+            <div class="modal fade" id="addAlunoModal" tabindex="-1" aria-labelledby="addAlunoModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="addAlunoModalLabel">Adicionar Aluno</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
                   <div class="modal-body">
-                    <form method="POST" action="processa_chamada.php">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="addAlunoLabel">Adicionar Aluno</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
+                    <form method="POST" action="processa_chamada.php" id="formAddAluno" onsubmit="limparFormulario(event, 'formAddAluno')">
                       <input type="hidden" name="data" id="dataMonitoria">
                       <div class="form-group">
-                        <label for="matriculaMonitor">Matrícula do Aluno</label>
-                        <input type="text" class="form-control" id="matriculaMonitor" name="matricula_monitor" placeholder="Digite a matrícula do monitor" onblur="buscarNome()" required>
+                        <label for="matriculaMonitorAddAluno">Matrícula do Aluno</label>
+                        <input type="text" class="form-control" id="matriculaMonitorAddAluno" name="matricula_monitor" placeholder="Digite a matrícula do aluno" onblur="buscarNome('AddAluno')" required>
                       </div>
                       <div class="form-group">
-                        <label for="nomeMonitor">Nome do Aluno</label>
-                        <input type="text" class="form-control" id="nomeMonitor" name="nome_monitor" placeholder="Nome do aluno" readonly required>
+                        <label for="nomeMonitorAddAluno">Nome do Aluno</label>
+                        <input type="text" class="form-control" id="nomeMonitorAddAluno" name="nome_monitor" placeholder="Nome do aluno" readonly required>
                       </div>
                       <div class="form-group">
-                        <label for="comentario">Feedback do Aluno</label>
-                        <textarea class="form-control" id="comentario" name="comentario" rows="4" required></textarea>
+                        <label for="comentarioAddAluno">Feedback do Aluno</label>
+                        <textarea class="form-control" id="comentarioAddAluno" name="comentario" rows="4" required></textarea>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary">Salvar Novo Dia</button>
+                        <button type="submit" class="btn btn-primary">Adicionar Aluno</button>
                       </div>
                     </form>
                   </div>
@@ -475,41 +475,63 @@
               </div>
             </div>
 
+            <script>
+              function limparFormulario(event, formId) {
+                const form = document.getElementById(formId);
 
+                fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form)
+                  })
+                  .then(response => response.text())
+                  .then(result => {
+                    console.log(result); 
 
-          </div>
-        </div>
-      </div>
-      <script>
-        function buscarNome() {
-          const matricula = document.getElementById('matriculaMonitor').value;
+                    const modalElement = form.closest('.modal');
+                    const modal = bootstrap.Modal.getInstance(modalElement);
+                    modal.hide();
 
-          if (matricula) {
-            fetch(`buscar_monitor.php?matricula=${matricula}`)
-              .then(response => response.json())
-              .then(data => {
-                if (data.sucesso) {
-                  document.getElementById('nomeMonitor').value = data.nome;
+                    form.reset(); 
+
+                    setTimeout(() => {
+                      location.reload(); 
+                    }, 500);
+                  })
+                  .catch(error => console.error('Erro ao enviar:', error));
+
+                event.preventDefault(); 
+              }
+
+              function buscarNome(modal) {
+                const matriculaId = `matriculaMonitor${modal}`;
+                const nomeId = `nomeMonitor${modal}`;
+
+                const matricula = document.getElementById(matriculaId).value;
+
+                if (matricula) {
+                  fetch(`buscar_monitor.php?matricula=${matricula}`)
+                    .then(response => response.json())
+                    .then(data => {
+                      if (data.sucesso) {
+                        document.getElementById(nomeId).value = data.nome;
+                      } else {
+                        alert('Matrícula não encontrada!');
+                        document.getElementById(nomeId).value = '';
+                      }
+                    })
+                    .catch(error => {
+                      console.error('Erro na busca:', error);
+                    });
                 } else {
-                  alert('Matrícula não encontrada!');
-                  document.getElementById('nomeMonitor').value = '';
+                  document.getElementById(nomeId).value = '';
                 }
-              })
-              .catch(error => {
-                console.error('Erro na busca:', error);
+              }
+
+              const addAlunoModal = document.getElementById('addAlunoModal');
+              addAlunoModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget; 
+                const data = button.getAttribute('data-dia'); 
+                const inputData = document.getElementById('dataMonitoria'); 
+                inputData.value = data;
               });
-          } else {
-            document.getElementById('nomeMonitor').value = '';
-          }
-        }
-      </script>
-      <script>
-        // Preencher o campo de data no modal
-        var addAlunoModal = document.getElementById('addAlunoModal');
-        addAlunoModal.addEventListener('show.bs.modal', function(event) {
-          var button = event.relatedTarget; // Botão que abriu o modal
-          var data = button.getAttribute('data-dia'); // Obter a data associada
-          var inputData = document.getElementById('dataMonitoria'); // Campo hidden no modal
-          inputData.value = data; // Definir o valor do campo
-        });
-      </script>
+            </script>
