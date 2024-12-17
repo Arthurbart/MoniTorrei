@@ -150,10 +150,9 @@
 
             <?php
             $sql_pedidos = "SELECT id, conteudo, data_pedido, status, usuario_id 
-                            FROM pedidos_conteudo 
-                            WHERE monitoria_id = '$id_monitoria' AND usuario_id = '{$_SESSION['usuario_id']}'
-                            ORDER BY id DESC";
-
+                FROM pedidos_conteudo 
+                WHERE monitoria_id = '$id_monitoria' AND usuario_id = '{$_SESSION['usuario_id']}'
+                ORDER BY id DESC";
 
             $result_pedidos = $conn->query($sql_pedidos);
 
@@ -164,46 +163,56 @@
                 $conteudo = htmlspecialchars($pedido['conteudo']);
                 $data_pedido = $pedido['data_pedido'] ? date('d/m/Y', strtotime($pedido['data_pedido'])) : 'Data inválida';
                 $status = htmlspecialchars($pedido['status']);
+
+                // Define a classe do badge com base no status
+                $badge_class = 'bg-info'; // Cor padrão (azul)
+                if ($status === 'aceito') {
+                  $badge_class = 'bg-success'; // Verde
+                } elseif ($status === 'negado') {
+                  $badge_class = 'bg-danger'; // Vermelho
+                }
+
                 echo "
-                    <div class='container mt-4'>
+                  <div class='container mt-4'>
                       <div class='card card-pedido mb-4'>
-                        <div class='card-body'>
-                          <div class='d-flex justify-content-between mb-2'>
-                            <div>
-                                <i class='bi bi-person pe-3'></i>
-                                <strong>Você</strong>
-                                <br>
-                                <small class='text-muted'>$data_pedido</small>
-                            </div>
-                            <div class='dropdown'>
-                              <button class='btn btn-sm btn-light dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
-                                <i class='bi bi-three-dots'></i>
-                              </button>
-                              <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                <li>
-                                  <form action='excluir_pedido.php' method='POST' style='margin: 0;'>
-                                    <input type='hidden' name='pedido_id' value='$pedido_id'>
-                                    <button class='dropdown-item text-danger' type='submit' onclick=\"return confirm('Tem certeza que deseja excluir este pedido?');\">Excluir Pedido</button>
-                                  </form>
-                                </li>
-                              </ul>
-                            </div>
+                          <div class='card-body'>
+                              <div class='d-flex justify-content-between mb-2'>
+                                  <div>
+                                      <i class='bi bi-person pe-3'></i>
+                                      <strong>Você</strong>
+                                      <br>
+                                      <small class='text-muted'>$data_pedido</small>
+                                  </div>
+                                  <div class='dropdown'>
+                                      <button class='btn btn-sm btn-light dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
+                                          <i class='bi bi-three-dots'></i>
+                                      </button>
+                                      <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                          <li>
+                                              <form action='excluir_pedido.php' method='POST' style='margin: 0;'>
+                                                  <input type='hidden' name='pedido_id' value='$pedido_id'>
+                                                  <button class='dropdown-item text-danger' type='submit' onclick=\"return confirm('Tem certeza que deseja excluir este pedido?');\">Excluir Pedido</button>
+                                              </form>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                              <p class='card-text'>$conteudo</p>
+                              <span class='badge $badge_class'>$status</span>
                           </div>
-                          <p class='card-text'>$conteudo</p>
-                          <span class='badge bg-info'>$status</span>
-                        </div>
                       </div>
-                    </div>
-                    ";
+                  </div>
+              ";
               }
             } else {
               echo "
-                <div class='alert alert-info' role='alert'>
-                    Nenhum pedido foi feito para esta monitoria ainda.
-                </div>
-                ";
+              <div class='alert alert-info' role='alert'>
+                  Nenhum pedido foi feito para esta monitoria ainda.
+              </div>
+              ";
             }
             ?>
+
           </div>
         </div>
       </div>

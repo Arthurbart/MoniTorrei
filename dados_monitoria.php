@@ -1,39 +1,53 @@
 <?php
-    // Extrai o nome da monitoria do nome da página
-    $nome_monitoria = basename($_SERVER['PHP_SELF'], '.php');  // Pega o nome da página, removendo a extensão '.php'
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $id_monitoria = intval($_GET['id']); 
     
-    // Prepara a consulta para obter os detalhes da monitoria com base no nome
     $sql = "
         SELECT 
             m.id, 
             m.nome, 
             m.horario, 
             m.sala, 
-            m.dias,
-            u.nome AS usuario_nome, 
-            m.curso 
+            m.curso, 
+            m.dias, 
+            m.usuario_id,
+            u.nome AS nome_monitor 
         FROM monitorias m
         JOIN usuario u ON m.usuario_id = u.id
-        WHERE m.nome = '$nome_monitoria' AND m.status = 'ativo'
+        WHERE m.id = $id_monitoria
     ";
-    
     $result = $conn->query($sql);
-    
-    // Verifica se a monitoria foi encontrada
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $id_monitoria = htmlspecialchars($row['id']);
-        $monitor_nome = htmlspecialchars($row['usuario_nome']);
-        $curso = htmlspecialchars($row['curso']);
-        $horario = htmlspecialchars($row['horario']);
-        $sala = htmlspecialchars($row['sala']);
-        $nome = htmlspecialchars($row['nome']);
-        $dias = htmlspecialchars($row['dias']);
-        $_SESSION['curso'] = $curso;
-        $_SESSION['nome_monitoria'] = $nome;
-        $_SESSION['sala'] = $sala;
-        $_SESSION['horario'] = $horario;
-        $_SESSION['id_monitoria'] = $id_monitoria;
 
-    } 
+    if ($result->num_rows > 0) {
+        $monitoria = $result->fetch_assoc(); 
+        $nome_monitoria = htmlspecialchars($monitoria['nome']);
+        $monitor_nome = htmlspecialchars($monitoria['nome_monitor']);
+        $curso = htmlspecialchars($monitoria['curso']);
+        $sala = htmlspecialchars($monitoria['sala']);
+        $dias = htmlspecialchars($monitoria['dias']);
+        $horario = htmlspecialchars($monitoria['horario']);
+        $id_monitor = htmlspecialchars($monitoria['usuario_id']);
+        $_SESSION['id_monitoria'] = $id_monitoria;
+        $_SESSION['dias'] = $dias;
+        $_SESSION['curso'] = $curso;
+        $_SESSION['id_monitor'] = $id_monitor;
+        $_SESSION['horario'] = $horario;
+        $_SESSION['sala'] = $sala;
+        $_SESSION['nome_monitoria'] = $nome_monitoria;
+        $_SESSION['monitor_nome'] = $monitor_nome;
+
+    } else {
+        echo "<script>
+            alert('Monitoria não encontrada.');
+            window.location.href = 'monitorias.php';
+        </script>";
+        exit();
+    }
+} else {
+    echo "<script>
+        alert('ID de monitoria inválido.');
+        window.location.href = 'monitorias.php';
+    </script>";
+    exit();
+}
 ?>

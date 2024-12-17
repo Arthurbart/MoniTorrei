@@ -1,5 +1,5 @@
 <?php
-include 'conexao.php'; // Conexão com o banco de dados
+include 'conexao.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $aluno_id = $_POST['aluno_id'];

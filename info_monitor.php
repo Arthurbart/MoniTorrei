@@ -218,14 +218,12 @@
 
           </div>
 
-          <!-- PEDIDOS -->
-
           <div class="tab-pane fade" id="meus-pedidos" role="tabpanel" aria-labelledby="meus-pedidos-tab">
             <?php
             $sql_pedidos = "SELECT id, conteudo, data_pedido, status, usuario_id 
-                                FROM pedidos_conteudo 
-                                WHERE monitoria_id = '$id_monitoria'
-                                ORDER BY id DESC";
+                    FROM pedidos_conteudo 
+                    WHERE monitoria_id = '$id_monitoria'
+                    ORDER BY id DESC";
 
             $result_pedidos = $conn->query($sql_pedidos);
 
@@ -238,49 +236,56 @@
                 $status = htmlspecialchars($pedido['status']);
 
                 $sql_pedinte = "SELECT nome
-                        FROM usuario 
-                        WHERE id = '$pedinte_id'
-                        ORDER BY id DESC";
+                            FROM usuario 
+                            WHERE id = '$pedinte_id'
+                            ORDER BY id DESC";
                 $result_pedinte = $conn->query($sql_pedinte);
                 $pedinte_nome = $result_pedinte->fetch_assoc()['nome'];
 
+                $badge_class = 'bg-info';
+                if ($status === 'aceito') {
+                  $badge_class = 'bg-success';
+                } elseif ($status === 'negado') {
+                  $badge_class = 'bg-danger';
+                }
+
                 echo "
-                        <div class='container mt-4'>
-                            <div class='card card-pedido mb-4'>
-                                <div class='card-body'>
-                                    <div class='d-flex justify-content-between mb-2'>
-                                        <div>
-                                            <i class='bi bi-person pe-3'></i>
-                                            <strong>$pedinte_nome</strong>
-                                            <br>
-                                            <small class='text-muted'>$data_pedido</small>
-                                        </div>
-                                        <div class='d-flex'>
-                                            <form action='atualizar_pedido.php' method='POST' class='me-2'>
-                                                <input type='hidden' name='pedido_id' value='$pedido_id'>
-                                                <input type='hidden' name='status' value='Aceito'>
-                                                <button type='submit' class='btn btn-success btn-sm'>Aceitar</button>
-                                            </form>
-                                            <form action='atualizar_pedido.php' method='POST'>
-                                                <input type='hidden' name='pedido_id' value='$pedido_id'>
-                                                <input type='hidden' name='status' value='Negado'>
-                                                <button type='submit' class='btn btn-danger btn-sm'>Negar</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <p class='card-text'>$conteudo</p>
-                                    <span class='badge bg-info'>$status</span>
-                                </div>
-                            </div>
-                        </div>
-                        ";
+                  <div class='container mt-4'>
+                      <div class='card card-pedido mb-4'>
+                          <div class='card-body'>
+                              <div class='d-flex justify-content-between mb-2'>
+                                  <div>
+                                      <i class='bi bi-person pe-3'></i>
+                                      <strong>$pedinte_nome</strong>
+                                      <br>
+                                      <small class='text-muted'>$data_pedido</small>
+                                  </div>
+                                  <div class='d-flex'>
+                                      <form action='atualizar_pedido.php' method='POST' class='me-2'>
+                                          <input type='hidden' name='pedido_id' value='$pedido_id'>
+                                          <input type='hidden' name='status' value='Aceito'>
+                                          <button type='submit' class='btn btn-success btn-sm'>Aceitar</button>
+                                      </form>
+                                      <form action='atualizar_pedido.php' method='POST'>
+                                          <input type='hidden' name='pedido_id' value='$pedido_id'>
+                                          <input type='hidden' name='status' value='Negado'>
+                                          <button type='submit' class='btn btn-danger btn-sm'>Negar</button>
+                                      </form>
+                                  </div>
+                              </div>
+                              <p class='card-text'>$conteudo</p>
+                              <span class='badge $badge_class'>$status</span>
+                          </div>
+                      </div>
+                  </div>
+              ";
               }
             } else {
               echo "
-                    <div class='alert alert-info' role='alert'>
-                        Nenhum pedido foi feito para esta monitoria ainda.
-                    </div>
-                    ";
+                  <div class='alert alert-info' role='alert'>
+                      Nenhum pedido foi feito para esta monitoria ainda.
+                  </div>
+              ";
             }
             ?>
           </div>
@@ -289,7 +294,6 @@
 
             <div class="d-flex justify-content-center">
               <div class="col-6">
-                <!-- Botão para abrir o modal -->
                 <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#monitoriaModal">
                   Nova Monitoria
                 </button>
@@ -298,7 +302,7 @@
 
             <div class="container mt-3">
               <?php
-              $query_dias = "SELECT DISTINCT data_presenca FROM presencas WHERE monitoria_id = ? ORDER BY data_presenca DESC";
+              $query_dias = "SELECT DISTINCT data_presenca FROM presencas WHERE monitoria_id = ? ORDER BY data_presenca ASC";
               $stmt_dias = $conn->prepare($query_dias);
 
               if ($stmt_dias) {
@@ -348,7 +352,7 @@
                             </div>
                             <div class='card-body'>";
 
-                  $query_alunos = "SELECT u.id, u.nome, u.matricula FROM presencas p 
+                  $query_alunos = "SELECT u.id, u.nome, u.matricula, p.feedback FROM presencas p 
                                      INNER JOIN usuario u ON p.usuario_id = u.id 
                                      WHERE p.monitoria_id = ? AND p.data_presenca = ?";
                   $stmt_alunos = $conn->prepare($query_alunos);
@@ -363,7 +367,6 @@
                       while ($aluno = $result_alunos->fetch_assoc()) {
                         echo "<li class='list-group-item'>" . htmlspecialchars($aluno['nome']) . " (" . htmlspecialchars($aluno['matricula']) . ")";
 
-                        // Dropdown para remover aluno da chamada
                         echo "<div class='dropdown float-end'>
                                         <button class='btn btn-sm btn-light dropdown-toggle' type='button' id='dropdownMenuButtonAluno' data-bs-toggle='dropdown' aria-expanded='false'>
                                             <i class='bi bi-three-dots'></i>
@@ -380,7 +383,10 @@
                                             </li>
                                         </ul>
                                       </div>";
-
+                        echo "<button class='btn btn-sm btn-info float-end ms-2' data-bs-toggle='modal' data-bs-target='#feedbackModal' 
+                                                data-feedback='" . htmlspecialchars($aluno['feedback']) . "' data-aluno='" . htmlspecialchars($aluno['nome']) . "'>
+                                                Ver Feedback
+                                                </button>";
                         echo "</li>";
                       }
                       echo "</ul>";
@@ -406,7 +412,6 @@
               ?>
             </div>
 
-            <!-- Modal para criar novo dia -->
             <div class="modal fade" id="monitoriaModal" tabindex="-1" aria-labelledby="monitoriaModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -442,7 +447,6 @@
               </div>
             </div>
 
-            <!-- Modal para adicionar aluno -->
             <div class="modal fade" id="addAlunoModal" tabindex="-1" aria-labelledby="addAlunoModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -474,8 +478,23 @@
                 </div>
               </div>
             </div>
-
+            <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="feedbackModalLabel">Feedback do Aluno</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <strong>Aluno: </strong><span id="alunoNome"></span><br><br>
+                    <strong>Feedback: </strong>
+                    <p id="feedbackTexto"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
             <script>
+              // Função para limpar formulário e enviar dados via fetch
               function limparFormulario(event, formId) {
                 const form = document.getElementById(formId);
 
@@ -485,23 +504,24 @@
                   })
                   .then(response => response.text())
                   .then(result => {
-                    console.log(result); 
+                    console.log(result);
 
                     const modalElement = form.closest('.modal');
                     const modal = bootstrap.Modal.getInstance(modalElement);
                     modal.hide();
 
-                    form.reset(); 
+                    form.reset();
 
                     setTimeout(() => {
-                      location.reload(); 
+                      location.reload();
                     }, 500);
                   })
                   .catch(error => console.error('Erro ao enviar:', error));
 
-                event.preventDefault(); 
+                event.preventDefault();
               }
 
+              // Função para buscar nome do monitor pelo número de matrícula
               function buscarNome(modal) {
                 const matriculaId = `matriculaMonitor${modal}`;
                 const nomeId = `nomeMonitor${modal}`;
@@ -527,11 +547,31 @@
                 }
               }
 
+              // Evento para definir data no modal de adicionar aluno
               const addAlunoModal = document.getElementById('addAlunoModal');
               addAlunoModal.addEventListener('show.bs.modal', function(event) {
-                const button = event.relatedTarget; 
-                const data = button.getAttribute('data-dia'); 
-                const inputData = document.getElementById('dataMonitoria'); 
+                const button = event.relatedTarget;
+                const data = button.getAttribute('data-dia');
+                const inputData = document.getElementById('dataMonitoria');
                 inputData.value = data;
               });
+
+              // Evento para exibir feedback no modal
+              const feedbackModal = document.getElementById('feedbackModal');
+              feedbackModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                const feedback = button.getAttribute('data-feedback');
+                const alunoNome = button.getAttribute('data-aluno');
+
+                const modalFeedback = feedbackModal.querySelector('#feedbackTexto');
+                const modalAlunoNome = feedbackModal.querySelector('#alunoNome');
+                modalFeedback.textContent = feedback || 'Nenhum feedback disponível.';
+                modalAlunoNome.textContent = alunoNome;
+              });
             </script>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

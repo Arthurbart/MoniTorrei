@@ -92,7 +92,7 @@
 
             <div class="container mt-3">
               <?php
-              $query_dias = "SELECT DISTINCT data_presenca FROM presencas WHERE monitoria_id = ? ORDER BY data_presenca DESC";
+              $query_dias = "SELECT DISTINCT data_presenca FROM presencas WHERE monitoria_id = ? ORDER BY data_presenca ASC";
               $stmt_dias = $conn->prepare($query_dias);
 
               if ($stmt_dias) {

@@ -82,7 +82,7 @@
                   while ($row = $result->fetch_assoc()) {
                     
                     echo"<div class='col-3'>
-                          <a href='" . urlencode($row['nome']). ".php' class='text-decoration-none'>
+                          <a href='monitoria.php?id=" . htmlspecialchars($row['id']) . "' class='text-decoration-none'>
                               <div class='card shadow-sm'>
                                 <img src='imgs/mesa-estudos.png' class='card-img-top' alt='Programação' style='opacity: 0.7;'>
                                 <div class='card-body'>
