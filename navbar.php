@@ -31,14 +31,14 @@
     <ul class="list-group">
       <?php
       // Consulta para buscar monitorias ativas
-      $sql = "SELECT nome FROM monitorias WHERE status = 'ativo'";
+      $sql = "SELECT id, nome FROM monitorias WHERE status = 'ativo'";
       $result = $conn->query($sql);
 
       if ($result->num_rows > 0) {
         // Loop para criar os itens do menu dinamicamente
         while ($row = $result->fetch_assoc()) {
           $nomeMonitoria = htmlspecialchars($row['nome']);
-          echo "<a href='".strtolower($nomeMonitoria).".php' class='text-decoration-none'>
+          echo "<a href='monitoria.php?id=" . htmlspecialchars($row['id']) . "' class='text-decoration-none'>
                   <li class='list-group-item'>$nomeMonitoria</li>
                 </a>";
         }
