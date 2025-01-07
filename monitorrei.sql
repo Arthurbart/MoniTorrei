@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 19/12/2024 às 20:51
--- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- Tempo de geração: 08/01/2025 às 00:32
+-- Versão do servidor: 10.4.28-MariaDB
+-- Versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -105,7 +105,14 @@ CREATE TABLE `monitorias` (
 
 INSERT INTO `monitorias` (`id`, `nome`, `horario`, `sala`, `usuario_id`, `curso`, `status`, `dias`) VALUES
 (26, 'Laboratório de Estudos Extraclasse', '12:20', 'Lab 03', 1, 'Todos os Cursos', 'ativo', 'Segundas, Terças e Quintas'),
-(27, 'Redes de Computadores', '13:00', 'Sala G4', 5, 'Informática', 'desativado', 'Terças e Quintas');
+(27, 'Redes de Computadores', '13:00', 'Sala G4', 5, 'Informática', 'desativado', 'Terças e Quintas'),
+(28, 'Química', '13:00', 'Sala G4', 5, 'Todos os Cursos', 'ativo', 'Segunda'),
+(29, 'Física', '13:00', 'Sala G2', 6, 'Todos os Cursos', 'ativo', 'Segunda'),
+(30, 'Programação', '13:00', 'Lab 03', 3, 'Informática', 'ativo', 'Segunda'),
+(31, 'Microbiologia', '13:00', 'Sala G3', 12, 'Alimentos', 'ativo', 'Segunda'),
+(32, 'Matemática Financeira', '13:00', 'Lab 01', 13, 'Administração', 'ativo', 'Segunda'),
+(33, 'Zootecnia', '13:00', 'Estufa', 10, 'Agropecuária', 'ativo', 'Segundas e sextas'),
+(34, 'Futsal', '13:00', 'Ginásio', 3, 'Todos os Cursos', 'ativo', 'Segundas e sextas');
 
 -- --------------------------------------------------------
 
@@ -277,7 +284,7 @@ ALTER TABLE `feedbacks`
 -- AUTO_INCREMENT de tabela `monitorias`
 --
 ALTER TABLE `monitorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de tabela `pedidos_conteudo`
@@ -289,7 +296,7 @@ ALTER TABLE `pedidos_conteudo`
 -- AUTO_INCREMENT de tabela `presencas`
 --
 ALTER TABLE `presencas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
