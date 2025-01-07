@@ -1,4 +1,3 @@
-  <!-- Banner -->
   <div class="banner">
     <div class="container py-4">
       <div class="pt-4">
@@ -9,7 +8,6 @@
     </div>
   </div>
 
-  <!-- Informações da Monitoria -->
   <div class="container my-4">
     <div class="row">
       <div class="col-md-3">
@@ -28,7 +26,7 @@
         </div>
       </div>
       <div class="col-md-9">
-        <!-- Tabs de Comentários, Arquivos e Meus Pedidos -->
+        <!-- Lista de navegacao -->
         <ul class="nav nav-tabs" id="monitoriaTabs" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="comentarios-tab" data-bs-toggle="tab" data-bs-target="#comentarios" type="button" role="tab" aria-controls="comentarios" aria-selected="true">Comentários</button>
@@ -43,11 +41,11 @@
             <button class="nav-link" id="chamada-tab" data-bs-toggle="tab" data-bs-target="#chamada" type="button" role="tab" aria-controls="chamada" aria-selected="false">Chamada</button>
           </li>
         </ul>
-        <div class="tab-content mt-3" id="monitoriaTabsContent">
-          <!-- Comentários -->
-          <div class="tab-pane fade show active" id="comentarios" role="tabpanel" aria-labelledby="comentarios-tab">
 
-            <!-- ADICIONA UM COMENTARIO -->
+        <div class="tab-content mt-3" id="monitoriaTabsContent">
+          
+          <!-- Parte dos comentarios do monitor -->
+          <div class="tab-pane fade show active" id="comentarios" role="tabpanel" aria-labelledby="comentarios-tab">
             <div class="mb-3">
               <form action="processa_aviso.php" method="POST">
                 <div class="input-group">
@@ -110,15 +108,11 @@
             }
             ?>
           </div>
-
-          <!-- Arquivos -->
+          <!-- Parte dos arquivos enviado pelo monitor -->
           <div class="tab-pane fade" id="arquivos" role="tabpanel" aria-labelledby="arquivos-tab">
-
-            <!-- ADICIONA UM ARQUIVO -->
             <div class="mb-3">
               <form action="processa_arquivo.php" method="POST" enctype="multipart/form-data">
                 <div class="row">
-                  <!-- Explicação do arquivo -->
                   <div class="col-12 mb-3">
                     <div class="input-group">
                       <span class="input-group-text"><i class="bi bi-person"></i></span>
@@ -126,12 +120,10 @@
                     </div>
                   </div>
 
-                  <!-- Input de arquivo -->
                   <div class="col-12 mb-3">
                     <input type="file" class="form-control" name="arquivo" required>
                   </div>
 
-                  <!-- Tipo de arquivo -->
                   <div class="col-12 mb-3">
                     <select class="form-select" name="tipo" required>
                       <option selected disabled>Selecione</option>
@@ -140,7 +132,6 @@
                     </select>
                   </div>
 
-                  <!-- Botão de envio -->
                   <div class="col-12">
                     <button type="submit" class="btn btn-secondary w-100">Enviar</button>
                   </div>
@@ -149,7 +140,6 @@
             </div>
 
             <?php
-            // Consulta para pegar os documentos da monitoria
             $sql_documentos = "SELECT d.id, d.descricao, d.doc, d.tipo, d.data_postagem, u.nome as usuario_nome 
                           FROM documentos d
                           JOIN usuario u ON d.usuario_id = u.id
@@ -167,10 +157,8 @@
                 $data_postagem = $documento['data_postagem'] ? date('d/m/Y', strtotime($documento['data_postagem'])) : 'Data inválida';
                 $usuario_nome = htmlspecialchars($documento['usuario_nome']);
 
-                // Define a cor do badge de acordo com o tipo
                 $badge_class = $tipo == 'Atividade' ? 'bg-danger' : 'bg-primary';
 
-                // Exibe o card do documento
                 echo "
                     <div class='card mb-3'>
                         <div class='card-body'>
@@ -217,7 +205,7 @@
             ?>
 
           </div>
-
+          <!-- Parte do monitor visualizar os pedidos dos usuarios -->
           <div class="tab-pane fade" id="meus-pedidos" role="tabpanel" aria-labelledby="meus-pedidos-tab">
             <?php
             $sql_pedidos = "SELECT id, conteudo, data_pedido, status, usuario_id 
@@ -251,7 +239,7 @@
 
                 echo "
                   <div class='container mt-4'>
-                      <div class='card card-pedido mb-4'>
+                      <div class='card mb-4'>
                           <div class='card-body'>
                               <div class='d-flex justify-content-between mb-2'>
                                   <div>
@@ -289,7 +277,7 @@
             }
             ?>
           </div>
-
+          <!-- Parte do monitor visualizar e fazer a chamada -->
           <div class="tab-pane fade" id="chamada" role="tabpanel" aria-labelledby="chamada-tab">
 
             <div class="d-flex justify-content-center">
@@ -494,7 +482,6 @@
               </div>
             </div>
             <script>
-              // Função para limpar formulário e enviar dados via fetch
               function limparFormulario(event, formId) {
                 const form = document.getElementById(formId);
 
@@ -521,7 +508,6 @@
                 event.preventDefault();
               }
 
-              // Função para buscar nome do monitor pelo número de matrícula
               function buscarNome(modal) {
                 const matriculaId = `matriculaMonitor${modal}`;
                 const nomeId = `nomeMonitor${modal}`;
@@ -547,7 +533,6 @@
                 }
               }
 
-              // Evento para definir data no modal de adicionar aluno
               const addAlunoModal = document.getElementById('addAlunoModal');
               addAlunoModal.addEventListener('show.bs.modal', function(event) {
                 const button = event.relatedTarget;
@@ -556,7 +541,6 @@
                 inputData.value = data;
               });
 
-              // Evento para exibir feedback no modal
               const feedbackModal = document.getElementById('feedbackModal');
               feedbackModal.addEventListener('show.bs.modal', function(event) {
                 const button = event.relatedTarget;
@@ -571,6 +555,7 @@
             </script>
 
           </div>
+
         </div>
       </div>
     </div>

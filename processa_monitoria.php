@@ -2,7 +2,6 @@
 include('conexao.php');
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Obtendo os dados do formulário e sanitizando
     $nome_monitoria = $conn->real_escape_string($_POST['nome_monitoria']);
     $matricula_monitor = $conn->real_escape_string($_POST['matricula_monitor']);
     $nome_monitor = $conn->real_escape_string($_POST['nome_monitor']);
@@ -11,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $sala = $conn->real_escape_string($_POST['local']);
     $dias = $conn->real_escape_string($_POST['dias']);
 
-    // Consulta para buscar o ID do monitor
     $query_usuario = "SELECT id FROM usuario WHERE matricula = '$matricula_monitor' LIMIT 1";
     $resultado_usuario = $conn->query($query_usuario);
 
@@ -19,7 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $row = $resultado_usuario->fetch_assoc();
         $id_monitor = $row['id'];
 
-        // Inserindo a monitoria no banco de dados
         $sql = "INSERT INTO monitorias (nome, sala, horario, usuario_id, curso, dias) 
                 VALUES ('$nome_monitoria', '$sala', '$horario', '$id_monitor', '$curso', '$dias')";
         
@@ -48,6 +45,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-// Fecha a conexão
 $conn->close();
 ?>

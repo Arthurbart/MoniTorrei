@@ -27,7 +27,7 @@
       </div>
       <div class="col-md-9">
 
-        <!-- Tabs de Comentários, Arquivos e Meus Pedidos -->
+        <!-- Lista de navegacao -->
         <ul class="nav nav-tabs" id="monitoriaTabs" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="comentarios-tab" data-bs-toggle="tab" data-bs-target="#comentarios" type="button" role="tab" aria-controls="comentarios" aria-selected="true">Comentários</button>
@@ -39,9 +39,10 @@
             <button class="nav-link" id="meus-pedidos-tab" data-bs-toggle="tab" data-bs-target="#meus-pedidos" type="button" role="tab" aria-controls="meus-pedidos" aria-selected="false">Meus Pedidos</button>
           </li>
         </ul>
+
         <div class="tab-content mt-3" id="monitoriaTabsContent">
 
-          <!-- Comentários -->
+          <!-- Parte do usuario visualizar os comentarios do monitor -->
           <div class="tab-pane fade show active" id="comentarios" role="tabpanel" aria-labelledby="comentarios-tab">
 
             <?php
@@ -83,7 +84,7 @@
             ?>
           </div>
 
-          <!-- Arquivos -->
+          <!-- Parte do usuario visualizar os arquivos da monitoria -->
           <div class="tab-pane fade" id="arquivos" role="tabpanel" aria-labelledby="arquivos-tab">
             <?php
             $sql_documentos = "SELECT d.id, d.descricao, d.doc, d.tipo, d.data_postagem, u.nome as usuario_nome 
@@ -134,8 +135,7 @@
             ?>
           </div>
 
-          <!-- PEDIDOS -->
-
+          <!-- Parte do usuario fazer os pedidos para a monitoria -->
           <div class="tab-pane fade" id="meus-pedidos" role="tabpanel" aria-labelledby="meus-pedidos-tab">
 
             <div class="mb-3">
@@ -174,7 +174,7 @@
 
                 echo "
                   <div class='container mt-4'>
-                      <div class='card card-pedido mb-4'>
+                      <div class='card mb-4'>
                           <div class='card-body'>
                               <div class='d-flex justify-content-between mb-2'>
                                   <div>
@@ -214,6 +214,7 @@
             ?>
 
           </div>
+
         </div>
       </div>
     </div>

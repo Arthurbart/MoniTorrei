@@ -1,9 +1,7 @@
 <?php
 include('conexao.php');
 
-// Verifica se o formulário foi enviado via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Verifica se o usuário está logado
     if (!isset($_SESSION['usuario_id'])) {
         echo "
         <script>
@@ -45,6 +43,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// Fecha a conexão
 $conn->close();
 ?>

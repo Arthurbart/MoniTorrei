@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,13 +31,11 @@
         }
     </script>
 </head>
-
 <body>
     <?php
     include('conexao.php');
     include('navbar.php');
     ?>
-
     <div class="container mt-5">
         <ul class="nav nav-tabs" id="monitoriaTabs" role="tablist">
             <li class="nav-item" role="presentation">

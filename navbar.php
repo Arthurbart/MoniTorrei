@@ -1,7 +1,5 @@
-<!-- Navbar -->
 <nav class="navbar navbar-light bg-light px-3">
   <div class="d-flex align-items-center">
-    <!-- Botão de Menu -->
     <button class="btn btn-outline-secondary me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
       <i class="bi bi-list"></i>
     </button>
@@ -10,7 +8,6 @@
       MoniTorrei
     </a>
   </div>
-  <!-- Ícone de Perfil -->
   <div class="dropdown">
     <a href="#" class="d-flex align-items-center text-decoration-none" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
       <?php echo $_SESSION['nome_usuario']; ?><i class="ms-3 bi bi-person-circle" style="font-size: 1.5rem;"></i>
@@ -21,7 +18,6 @@
   </div>
 </nav>
 
-<!-- Menu Lateral (Offcanvas) -->
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
   <div class="offcanvas-header">
     <h5 id="offcanvasMenuLabel">Monitorias</h5>
@@ -30,12 +26,10 @@
   <div class="offcanvas-body">
     <ul class="list-group">
       <?php
-      // Consulta para buscar monitorias ativas
       $sql = "SELECT id, nome FROM monitorias WHERE status = 'ativo'";
       $result = $conn->query($sql);
 
       if ($result->num_rows > 0) {
-        // Loop para criar os itens do menu dinamicamente
         while ($row = $result->fetch_assoc()) {
           $nomeMonitoria = htmlspecialchars($row['nome']);
           echo "<a href='monitoria.php?id=" . htmlspecialchars($row['id']) . "' class='text-decoration-none'>
