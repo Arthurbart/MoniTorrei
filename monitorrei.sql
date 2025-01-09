@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 08/01/2025 às 00:32
+-- Tempo de geração: 09/01/2025 às 23:04
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -66,21 +66,6 @@ CREATE TABLE `documentos` (
 INSERT INTO `documentos` (`id`, `titulo`, `tipo`, `doc`, `descricao`, `data_postagem`, `usuario_id`, `monitoria_id`) VALUES
 (5, '', 'Conteúdo', 0x32365f67617365735f6964656169732e706466, 'Para os alunos de agropecuária que pediram, anexei aqui o documento descompactado da explicação de química', '2024-12-19', 1, 26),
 (6, '', 'Atividade', 0x32365f6c697374615f7465726d6f2e706466, 'Aqui está os exercícios de química que pediram tmb', '2024-12-19', 1, 26);
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `feedbacks`
---
-
-CREATE TABLE `feedbacks` (
-  `id` int(11) NOT NULL,
-  `usuario_id` int(11) NOT NULL,
-  `monitoria_id` int(11) NOT NULL,
-  `estrelas` int(11) NOT NULL CHECK (`estrelas` between 1 and 5),
-  `comentario` text DEFAULT NULL,
-  `data_feedback` date NOT NULL DEFAULT curdate()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -222,14 +207,6 @@ ALTER TABLE `documentos`
   ADD KEY `monitoria_id` (`monitoria_id`);
 
 --
--- Índices de tabela `feedbacks`
---
-ALTER TABLE `feedbacks`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `aluno_id` (`usuario_id`),
-  ADD KEY `monitoria_id` (`monitoria_id`);
-
---
 -- Índices de tabela `monitorias`
 --
 ALTER TABLE `monitorias`
@@ -275,12 +252,6 @@ ALTER TABLE `documentos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT de tabela `feedbacks`
---
-ALTER TABLE `feedbacks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de tabela `monitorias`
 --
 ALTER TABLE `monitorias`
@@ -321,13 +292,6 @@ ALTER TABLE `avisos`
 ALTER TABLE `documentos`
   ADD CONSTRAINT `documentos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `documentos_ibfk_2` FOREIGN KEY (`monitoria_id`) REFERENCES `monitorias` (`id`) ON DELETE CASCADE;
-
---
--- Restrições para tabelas `feedbacks`
---
-ALTER TABLE `feedbacks`
-  ADD CONSTRAINT `feedbacks_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `feedbacks_ibfk_2` FOREIGN KEY (`monitoria_id`) REFERENCES `monitorias` (`id`) ON DELETE CASCADE;
 
 --
 -- Restrições para tabelas `monitorias`
