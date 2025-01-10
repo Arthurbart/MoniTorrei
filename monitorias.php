@@ -57,7 +57,7 @@
     </div>
       
     <?php
-      if ($_SESSION['cargo'] == 3){
+      if ($_SESSION['cargo'] == 'admin'){
         echo "<a href='adicionar.php'><button class='btn btn-dark btn-round btn-redondo'>&#10010;</button></a>";
       }
     ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 09/01/2025 às 23:04
+-- Tempo de geração: 10/01/2025 às 01:35
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -164,7 +164,7 @@ CREATE TABLE `usuario` (
   `curso` varchar(20) NOT NULL,
   `nome` varchar(50) NOT NULL,
   `matricula` int(11) NOT NULL,
-  `cargo` int(11) NOT NULL DEFAULT 1
+  `cargo` varchar(10) NOT NULL DEFAULT 'aluno'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -172,19 +172,19 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `senha`, `curso`, `nome`, `matricula`, `cargo`) VALUES
-(1, 'Bernardo00', 'informatica', 'Arthur Bernardo Barth', 2023319513, 3),
-(2, 'teste', 'informatica', 'pepis', 0, 3),
-(3, 'juver', 'informatica', 'Felipe Juver', 2023123123, 1),
-(4, 'ferri', 'Alimentos', 'Ferri', 2023319700, 2),
-(5, 'helena', 'Alimentos', 'Helena Tamiozzo', 2022315206, 1),
-(6, '', 'agropecuaria', 'Joaquim Kunz', 2024312099, 0),
-(7, '', 'agropecuaria', 'Bruno Rodrigues', 2024305700, 0),
-(8, '', 'agropecuaria', 'Kauan Ferreira', 2024312992, 0),
-(9, '', 'agropecuaria', 'David Brayan', 2024326227, 0),
-(10, '', 'agropecuaria', 'Bento Finn', 2024313990, 0),
-(11, '', 'agropecuaria', 'Andre Welter', 2024305586, 0),
-(12, '', 'informatica', 'Renata Petry', 2022314488, 0),
-(13, '', 'informatica', 'Maria Eduarda', 2022314441, 0);
+(1, 'Bernardo00', 'informatica', 'Arthur Bernardo Barth', 2023319513, 'admin'),
+(2, 'teste', 'informatica', 'pepis', 0, 'admin'),
+(3, 'juver', 'informatica', 'Felipe Juver', 2023123123, 'aluno'),
+(4, 'ferri', 'Alimentos', 'Ferri', 2023319700, 'docente'),
+(5, 'helena', 'Alimentos', 'Helena Tamiozzo', 2022315206, 'aluno'),
+(6, '', 'agropecuaria', 'Joaquim Kunz', 2024312099, 'aluno'),
+(7, '', 'agropecuaria', 'Bruno Rodrigues', 2024305700, 'aluno'),
+(8, '', 'agropecuaria', 'Kauan Ferreira', 2024312992, 'aluno'),
+(9, '', 'agropecuaria', 'David Brayan', 2024326227, 'aluno'),
+(10, '', 'agropecuaria', 'Bento Finn', 2024313990, 'aluno'),
+(11, '', 'agropecuaria', 'Andre Welter', 2024305586, 'aluno'),
+(12, '', 'informatica', 'Renata Petry', 2022314488, 'aluno'),
+(13, '', 'informatica', 'Maria Eduarda', 2022314441, 'aluno');
 
 --
 -- Índices para tabelas despejadas

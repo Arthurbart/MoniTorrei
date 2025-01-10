@@ -37,7 +37,7 @@
     include('dados_monitoria.php');
     if ($_SESSION['usuario_id'] == $id_monitor) {
         include('info_monitor.php');
-    } elseif ($_SESSION['cargo'] == 2) {
+    } elseif ($_SESSION['cargo'] == 'professor') {
         include('info_professor.php');
     } else {
         include('info_monitoria.php');
