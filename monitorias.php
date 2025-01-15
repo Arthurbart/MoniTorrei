@@ -34,7 +34,7 @@
               if ($result->num_rows > 0) {
                   while ($row = $result->fetch_assoc()) {
                     
-                    echo"<div class='col-3 pt-3'>
+                    echo"<div class='col-6 col-md-3 pt-3'>
                           <a href='monitoria.php?id=" . htmlspecialchars($row['id']) . "' class='text-decoration-none'>
                               <div class='card shadow-sm'>
                                 <img src='imgs/mesa-estudos.png' class='card-img-top' alt='Programação' style='opacity: 0.7;'>
