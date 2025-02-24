@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10/01/2025 às 01:35
+-- Tempo de geração: 24/02/2025 às 18:37
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -81,23 +81,25 @@ CREATE TABLE `monitorias` (
   `usuario_id` int(11) NOT NULL,
   `curso` varchar(50) NOT NULL DEFAULT 'Todos os cursos',
   `status` varchar(10) NOT NULL DEFAULT 'ativo',
-  `dias` varchar(50) NOT NULL DEFAULT 'Segundas, terças e quintas'
+  `dias` varchar(50) NOT NULL DEFAULT 'Segundas, terças e quintas',
+  `img_banner` text NOT NULL DEFAULT 'imgs/banner/default.jpg',
+  `img_card` text NOT NULL DEFAULT 'imgs/card/default.jpg'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `monitorias`
 --
 
-INSERT INTO `monitorias` (`id`, `nome`, `horario`, `sala`, `usuario_id`, `curso`, `status`, `dias`) VALUES
-(26, 'Laboratório de Estudos Extraclasse', '12:20', 'Lab 03', 1, 'Todos os Cursos', 'ativo', 'Segundas, Terças e Quintas'),
-(27, 'Redes de Computadores', '13:00', 'Sala G4', 5, 'Informática', 'desativado', 'Terças e Quintas'),
-(28, 'Química', '13:00', 'Sala G4', 5, 'Todos os Cursos', 'ativo', 'Segunda'),
-(29, 'Física', '13:00', 'Sala G2', 6, 'Todos os Cursos', 'ativo', 'Segunda'),
-(30, 'Programação', '13:00', 'Lab 03', 3, 'Informática', 'ativo', 'Segunda'),
-(31, 'Microbiologia', '13:00', 'Sala G3', 12, 'Alimentos', 'ativo', 'Segunda'),
-(32, 'Matemática Financeira', '13:00', 'Lab 01', 13, 'Administração', 'ativo', 'Segunda'),
-(33, 'Zootecnia', '13:00', 'Estufa', 10, 'Agropecuária', 'ativo', 'Segundas e sextas'),
-(34, 'Futsal', '13:00', 'Ginásio', 3, 'Todos os Cursos', 'ativo', 'Segundas e sextas');
+INSERT INTO `monitorias` (`id`, `nome`, `horario`, `sala`, `usuario_id`, `curso`, `status`, `dias`, `img_banner`, `img_card`) VALUES
+(26, 'Laboratório de Estudos Extraclasse', '12:20', 'Lab 03', 1, 'Todos os Cursos', 'ativo', 'Segundas, Terças e Quintas', 'imgs/banner/juver.jpg', 'imgs/card/juver.jpg'),
+(27, 'Redes de Computadores', '13:00', 'Sala G4', 5, 'Informática', 'desativado', 'Terças e Quintas', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
+(28, 'Química', '13:00', 'Sala G4', 5, 'Todos os Cursos', 'ativo', 'Segunda', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
+(29, 'Física', '13:00', 'Sala G2', 6, 'Todos os Cursos', 'ativo', 'Segunda', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
+(30, 'Programação', '13:00', 'Lab 03', 3, 'Informática', 'ativo', 'Segunda', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
+(31, 'Microbiologia', '13:00', 'Sala G3', 12, 'Alimentos', 'ativo', 'Segunda', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
+(32, 'Matemática Financeira', '13:00', 'Lab 01', 13, 'Administração', 'ativo', 'Segunda', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
+(33, 'Zootecnia', '13:00', 'Estufa', 10, 'Agropecuária', 'ativo', 'Segundas e sextas', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
+(34, 'Futsal', '13:00', 'Ginásio', 3, 'Todos os Cursos', 'ativo', 'Segundas e sextas', 'imgs/banner/default.jpg', 'imgs/card/default.jpg');
 
 -- --------------------------------------------------------
 
@@ -164,27 +166,28 @@ CREATE TABLE `usuario` (
   `curso` varchar(20) NOT NULL,
   `nome` varchar(50) NOT NULL,
   `matricula` int(11) NOT NULL,
-  `cargo` varchar(10) NOT NULL DEFAULT 'aluno'
+  `cargo` varchar(10) NOT NULL DEFAULT 'aluno',
+  `foto` varchar(255) NOT NULL DEFAULT 'imgs/usuario/default.jpg'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `senha`, `curso`, `nome`, `matricula`, `cargo`) VALUES
-(1, 'Bernardo00', 'informatica', 'Arthur Bernardo Barth', 2023319513, 'admin'),
-(2, 'teste', 'informatica', 'pepis', 0, 'admin'),
-(3, 'juver', 'informatica', 'Felipe Juver', 2023123123, 'aluno'),
-(4, 'ferri', 'Alimentos', 'Ferri', 2023319700, 'docente'),
-(5, 'helena', 'Alimentos', 'Helena Tamiozzo', 2022315206, 'aluno'),
-(6, '', 'agropecuaria', 'Joaquim Kunz', 2024312099, 'aluno'),
-(7, '', 'agropecuaria', 'Bruno Rodrigues', 2024305700, 'aluno'),
-(8, '', 'agropecuaria', 'Kauan Ferreira', 2024312992, 'aluno'),
-(9, '', 'agropecuaria', 'David Brayan', 2024326227, 'aluno'),
-(10, '', 'agropecuaria', 'Bento Finn', 2024313990, 'aluno'),
-(11, '', 'agropecuaria', 'Andre Welter', 2024305586, 'aluno'),
-(12, '', 'informatica', 'Renata Petry', 2022314488, 'aluno'),
-(13, '', 'informatica', 'Maria Eduarda', 2022314441, 'aluno');
+INSERT INTO `usuario` (`id`, `senha`, `curso`, `nome`, `matricula`, `cargo`, `foto`) VALUES
+(1, 'Bernardo00', 'informatica', 'Arthur Bernardo Barth', 2023319513, 'admin', 'imgs/usuario/120230216_085209.jpg'),
+(2, 'teste', 'informatica', 'pepis', 0, 'admin', 'imgs/usuario/default.jpg'),
+(3, 'juver', 'informatica', 'Felipe Juver', 2023123123, 'aluno', 'imgs/usuario/3juver.jpeg'),
+(4, 'ferri', 'Alimentos', 'Ferri', 2023319700, 'docente', 'imgs/usuario/default.jpg'),
+(5, 'helena', 'Alimentos', 'Helena Tamiozzo', 2022315206, 'aluno', 'imgs/usuario/default.jpg'),
+(6, '', 'agropecuaria', 'Joaquim Kunz', 2024312099, 'aluno', 'imgs/usuario/default.jpg'),
+(7, '', 'agropecuaria', 'Bruno Rodrigues', 2024305700, 'aluno', 'imgs/usuario/default.jpg'),
+(8, '', 'agropecuaria', 'Kauan Ferreira', 2024312992, 'aluno', 'imgs/usuario/default.jpg'),
+(9, '', 'agropecuaria', 'David Brayan', 2024326227, 'aluno', 'imgs/usuario/default.jpg'),
+(10, '', 'agropecuaria', 'Bento Finn', 2024313990, 'aluno', 'imgs/usuario/default.jpg'),
+(11, '', 'agropecuaria', 'Andre Welter', 2024305586, 'aluno', 'imgs/usuario/default.jpg'),
+(12, '', 'informatica', 'Renata Petry', 2022314488, 'aluno', 'imgs/usuario/default.jpg'),
+(13, '', 'informatica', 'Maria Eduarda', 2022314441, 'aluno', 'imgs/usuario/default.jpg');
 
 --
 -- Índices para tabelas despejadas
@@ -255,7 +258,7 @@ ALTER TABLE `documentos`
 -- AUTO_INCREMENT de tabela `monitorias`
 --
 ALTER TABLE `monitorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de tabela `pedidos_conteudo`

@@ -30,6 +30,8 @@
       $_SESSION['cargo'] = $user['cargo']; 
       $_SESSION['nome_usuario'] = $user['nome']; 
       $_SESSION['curso'] = $user['curso']; 
+      $_SESSION['foto'] = $user['foto']; 
+
       echo "
       <script>
           alert('Login realizado com sucesso, bem-vindo!');

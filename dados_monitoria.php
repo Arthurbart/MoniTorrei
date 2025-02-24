@@ -11,7 +11,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             m.curso, 
             m.dias, 
             m.usuario_id,
+            m.img_banner,
+            u.foto,
             u.nome AS nome_monitor 
+
         FROM monitorias m
         JOIN usuario u ON m.usuario_id = u.id
         WHERE m.id = $id_monitoria
@@ -27,6 +30,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $dias = htmlspecialchars($monitoria['dias']);
         $horario = htmlspecialchars($monitoria['horario']);
         $id_monitor = htmlspecialchars($monitoria['usuario_id']);
+        $foto_monitor = htmlspecialchars($monitoria['foto']);
+        $img_banner = htmlspecialchars($monitoria['img_banner']);
         $_SESSION['id_monitoria'] = $id_monitoria;
         $_SESSION['dias'] = $dias;
         $_SESSION['curso'] = $curso;
@@ -35,6 +40,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $_SESSION['sala'] = $sala;
         $_SESSION['nome_monitoria'] = $nome_monitoria;
         $_SESSION['monitor_nome'] = $monitor_nome;
+        $_SESSION['foto_monitor'] = $foto_monitor;
+        $_SESSION['img_banner'] = $img_banner;
 
     } else {
         echo "<script>

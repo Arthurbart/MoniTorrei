@@ -20,6 +20,7 @@
         m.horario, 
         m.sala, 
         m.curso, 
+        m.img_card, 
         u.nome AS usuario_nome 
       FROM monitorias m
       JOIN usuario u ON m.usuario_id = u.id
@@ -29,15 +30,15 @@
     ?>
 
     <div class="container mt-4">
-        <div class="row">
+        <div class="row mb-5">
             <?php
               if ($result->num_rows > 0) {
                   while ($row = $result->fetch_assoc()) {
-                    
-                    echo"<div class='col-6 col-md-3 pt-3'>
+                    $img_card = htmlspecialchars($row['img_card']);
+                    echo"<div class='col-6 col-md-3 mb-3'>
                           <a href='monitoria.php?id=" . htmlspecialchars($row['id']) . "' class='text-decoration-none'>
                               <div class='card shadow-sm'>
-                                <img src='imgs/mesa-estudos.png' class='card-img-top' alt='Programação' style='opacity: 0.7;'>
+                                <img src='$img_card' class='card-img-top' alt='Imagem do Card'>
                                 <div class='card-body'>
                                   <h5 class='card-title'>" . htmlspecialchars($row['nome']) . "</h5>
                                   <p class='card-text text'>Monitor: ". htmlspecialchars($row['usuario_nome']) ."</p>

@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <?php 
     include('conexao.php');
+    include('dados_monitoria.php');
 ?>
 <head>
     <meta charset="UTF-8">
@@ -13,7 +14,7 @@
     <link rel="stylesheet" href="style.css">
     <style>
         .banner {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(imgs/banner-estudo.png) no-repeat center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(<?=$img_banner?>) no-repeat center;
             background-size: cover;
             background-position: center;
             color: white;
@@ -34,7 +35,6 @@
 <body>
     <?php
     include('navbar.php');
-    include('dados_monitoria.php');
     if ($_SESSION['usuario_id'] == $id_monitor) {
         include('info_monitor.php');
     } elseif ($_SESSION['cargo'] == 'docente') {

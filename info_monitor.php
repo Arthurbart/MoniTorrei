@@ -4,7 +4,7 @@
         <?php echo "<h1>$nome_monitoria</h1>"; ?>
         <p>Instituto Federal Farroupilha</p>
       </div>
-      <img src="imgs/menina.png" alt="Monitor">
+      <img src="<?= $foto_monitor ?>" alt="Monitor">
     </div>
   </div>
 
@@ -74,7 +74,7 @@
                             <div class='card-body'>
                                 <div class='d-flex justify-content-between mb-2'>
                                     <div class='d-flex'>
-                                        <img src='imgs/menina.png' alt='Monitor' class='rounded-circle me-2' width='40' height='40'>
+                                        <img src='$foto_monitor' alt='Monitor' class='rounded-circle me-2' width='40' height='40'>
                                         <div>
                                           <h6 class='card-title mb-0'>$monitor_nome</h6>
                                           <small class='text-muted'>$data_aviso</small>
@@ -164,7 +164,7 @@
                         <div class='card-body'>
                             <div class='d-flex justify-content-between mb-2'>
                                 <div class='d-flex align-itens-center mb-2'>
-                                    <img src='imgs/menina.png' alt='Monitor' class='rounded-circle me-2' width='40' height='40'>
+                                    <img src='$foto_monitor' alt='Monitor' class='rounded-circle me-2' width='40' height='40'>
                                     <div>
                                       <h6 class='card-title mb-0'>$usuario_nome</h6>
                                       <small class='text-muted'>$data_postagem</small>
@@ -223,12 +223,14 @@
                 $data_pedido = $pedido['data_pedido'] ? date('d/m/Y', strtotime($pedido['data_pedido'])) : 'Data inválida';
                 $status = htmlspecialchars($pedido['status']);
 
-                $sql_pedinte = "SELECT nome
+                $sql_pedinte = "SELECT nome, foto
                             FROM usuario 
                             WHERE id = '$pedinte_id'
                             ORDER BY id DESC";
                 $result_pedinte = $conn->query($sql_pedinte);
-                $pedinte_nome = $result_pedinte->fetch_assoc()['nome'];
+                $pedinte_data = $result_pedinte->fetch_assoc();
+                $pedinte_nome = $pedinte_data['nome'];
+                $pedinte_foto = $pedinte_data['foto'];
 
                 $badge_class = 'bg-info';
                 if ($status === 'aceito') {
@@ -243,7 +245,7 @@
                           <div class='card-body'>
                               <div class='d-flex justify-content-between mb-2'>
                                   <div>
-                                      <i class='bi bi-person pe-3'></i>
+                                      <img src='$pedinte_foto' alt='Monitor' class='rounded-circle me-2' width='40' height='40'>
                                       <strong>$pedinte_nome</strong>
                                       <br>
                                       <small class='text-muted'>$data_pedido</small>

@@ -8,13 +8,14 @@
       MoniTorrei
     </a>
   </div>
+
   <div class="dropdown">
     <a href="#" class="d-flex align-items-center text-decoration-none" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-      <?php echo $_SESSION['nome_usuario']; ?><i class="ms-3 bi bi-person-circle" style="font-size: 1.5rem;"></i>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-      <li><a class="dropdown-item text-danger" href="logout.php">Sair da conta</a></li>
-    </ul>
+      <?php echo "" . $_SESSION['nome_usuario'] . "  <img style='width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 1px solid rgb(0, 47, 255);' class='ms-3' src='" . $_SESSION['foto'] . "' alt=''> " ?>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
+        <li><a class="dropdown-item text-success" href="edita.php">Visualizar perfil</a></li>
+        <li><a class="dropdown-item text-danger" href="logout.php">Sair da conta</a></li>
+      </ul>
   </div>
 </nav>
 

@@ -4,7 +4,7 @@
         <?php echo "<h1>$nome_monitoria</h1>"; ?>
         <p>Instituto Federal Farroupilha</p>
       </div>
-      <img src="imgs/menina.png" alt="Monitor">
+      <img src="<?= $foto_monitor ?>" alt="Monitor">
     </div>
   </div>
 
@@ -63,7 +63,7 @@
                         <div class='card mb-3'>
                             <div class='card-body'>
                                 <div class='d-flex align-items-center mb-2'>
-                                    <img src='imgs/menina.png' alt='Monitor' class='rounded-circle me-2' width='40' height='40'>
+                                    <img src='$foto_monitor' alt='Monitor' class='rounded-circle me-2' width='40' height='40'>
                                     <div>
                                         <h6 class='card-title mb-0'>$monitor_nome</h6>
                                         <small class='text-muted'>$data_aviso</small>
@@ -109,7 +109,7 @@
                     <div class='card mb-3'>
                         <div class='card-body'>
                             <div class='d-flex align-items-center mb-2'>
-                                <img src='imgs/menina.png' alt='Monitor' class='rounded-circle me-2' width='40' height='40'>
+                                <img src='$foto_monitor' alt='Monitor' class='rounded-circle me-2' width='40' height='40'>
                                 <div>
                                     <h6 class='card-title mb-0'>$usuario_nome</h6>
                                     <small class='text-muted'>$data_postagem</small>
@@ -172,13 +172,15 @@
                   $badge_class = 'bg-danger'; // Vermelho
                 }
 
+                $foto = $_SESSION['foto'];
+
                 echo "
                   <div class='container mt-4'>
                       <div class='card mb-4'>
                           <div class='card-body'>
                               <div class='d-flex justify-content-between mb-2'>
                                   <div>
-                                      <i class='bi bi-person pe-3'></i>
+                                      <img src='$foto' alt='Monitor' class='rounded-circle me-2' width='40' height='40'>
                                       <strong>Você</strong>
                                       <br>
                                       <small class='text-muted'>$data_pedido</small>

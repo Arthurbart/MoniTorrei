@@ -52,7 +52,7 @@
         <div class="tab-content mt-3">
             <div class="tab-pane fade show active" id="adicionar" role="tabpanel" aria-labelledby="adicionar-tab">
                 <h1 class="text-center mb-4">Adicionar Monitoria</h1>
-                <form action="processa_monitoria.php" method="POST">
+                <form action="processa_monitoria.php" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="nomeMonitoria" class="form-label">Nome da Monitoria</label>
                         <input type="text" class="form-control" id="nomeMonitoria" name="nome_monitoria" placeholder="Digite o nome da monitoria" required>
@@ -86,6 +86,14 @@
                             <option value="Agropecuária">Agropecuária</option>
                             <option value="Informática">Informática</option>
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="img_card" class="form-label">Imagem do Card (Opcional)</label>
+                        <input type="file" class="form-control" id="img_card" name="img_card">
+                    </div>
+                    <div class="mb-3">
+                        <label for="img_banner" class="form-label">Imagem do Banner (Opcional)</label>
+                        <input type="file" class="form-control" id="img_banner" name="img_banner">
                     </div>
                     <button type="submit" class="btn btn-primary w-100 mb-5">Adicionar Monitoria</button>
                 </form>
