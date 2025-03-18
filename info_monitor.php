@@ -251,16 +251,26 @@
                                       <small class='text-muted'>$data_pedido</small>
                                   </div>
                                   <div class='d-flex'>
+                                  ";
+                                  if ($status === 'Pendente' or $status === 'negado') {
+                                    echo"
                                       <form action='atualizar_pedido.php' method='POST' class='me-2'>
                                           <input type='hidden' name='pedido_id' value='$pedido_id'>
                                           <input type='hidden' name='status' value='Aceito'>
                                           <button type='submit' class='btn btn-success btn-sm'>Aceitar</button>
                                       </form>
+                                      ";
+                                  }
+                                  if ($status === 'Pendente' or $status === 'aceito') {
+                                    echo"
                                       <form action='atualizar_pedido.php' method='POST'>
                                           <input type='hidden' name='pedido_id' value='$pedido_id'>
                                           <input type='hidden' name='status' value='Negado'>
                                           <button type='submit' class='btn btn-danger btn-sm'>Negar</button>
                                       </form>
+                                      ";
+                                    };
+                                  echo"
                                   </div>
                               </div>
                               <p class='card-text'>$conteudo</p>
@@ -371,12 +381,13 @@
                                                     </button>
                                                 </form>
                                             </li>
+                                            <li>
+                                                <button class='dropdown-item text-primary' data-bs-toggle='modal' data-bs-target='#feedbackModal' data-feedback='" . htmlspecialchars($aluno['feedback']) . "' data-aluno='" . htmlspecialchars($aluno['nome']) . "'>
+                                                  Ver Feedback
+                                                </button>
+                                            </li>
                                         </ul>
                                       </div>";
-                        echo "<button class='btn btn-sm btn-info float-end ms-2' data-bs-toggle='modal' data-bs-target='#feedbackModal' 
-                                                data-feedback='" . htmlspecialchars($aluno['feedback']) . "' data-aluno='" . htmlspecialchars($aluno['nome']) . "'>
-                                                Ver Feedback
-                                                </button>";
                         echo "</li>";
                       }
                       echo "</ul>";

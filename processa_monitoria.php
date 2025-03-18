@@ -10,15 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $sala = $conn->real_escape_string($_POST['local']);
     $dias = $conn->real_escape_string($_POST['dias']);
     
-    // Inicializando as variáveis de imagens com valores padrão
     $img_banner = $_FILES['img_banner'];
     $img_card = $_FILES['img_card'];
 
-    // Valores padrão para imagens se não forem enviadas
     $banner_destino = 'imgs/banner/default.jpg';
     $card_destino = 'imgs/card/default.jpg';
 
-    // Se a imagem do banner foi enviada, valida e define o destino
     if ($img_banner['name']) {
         $allowed_extensions = ['jpg', 'jpeg', 'png'];
         $banner_ext = strtolower(pathinfo($img_banner['name'], PATHINFO_EXTENSION));
@@ -26,13 +23,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (!in_array($banner_ext, $allowed_extensions)) {
             echo "<script>
                     alert('Somente arquivos PNG, JPG ou JPEG são permitidos para o banner.');
+                    window.history.back();
                   </script>";
             exit();
         }
         $banner_destino = 'imgs/banner/' . $nome_monitoria . '_banner.' . $banner_ext;
     }
 
-    // Se a imagem do card foi enviada, valida e define o destino
     if ($img_card['name']) {
         $allowed_extensions = ['jpg', 'jpeg', 'png'];
         $card_ext = strtolower(pathinfo($img_card['name'], PATHINFO_EXTENSION));
@@ -40,13 +37,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (!in_array($card_ext, $allowed_extensions)) {
             echo "<script>
                     alert('Somente arquivos PNG, JPG ou JPEG são permitidos para o card.');
+                    window.history.back();
                   </script>";
             exit();
         }
         $card_destino = 'imgs/card/' . $nome_monitoria . '_card.' . $card_ext;
     }
 
-    // Verificar se o aluno existe no banco de dados
     $query_usuario = "SELECT id FROM usuario WHERE matricula = '$matricula_monitor' LIMIT 1";
     $resultado_usuario = $conn->query($query_usuario);
 
@@ -58,10 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 VALUES ('$nome_monitoria', '$sala', '$horario', '$id_monitor', '$curso', '$dias', '$banner_destino', '$card_destino')";
 
         if ($conn->query($sql) === TRUE) {
-            // Verifique se as imagens foram enviadas antes de movê-las
             if ($img_banner['name'] && !move_uploaded_file($img_banner['tmp_name'], $banner_destino)) {
                 echo "<script>
                         alert('Erro ao fazer upload da imagem do banner.');
+                        window.history.back();
                       </script>";
                 exit();
             }
@@ -69,6 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($img_card['name'] && !move_uploaded_file($img_card['tmp_name'], $card_destino)) {
                 echo "<script>
                         alert('Erro ao fazer upload da imagem do card.');
+                        window.history.back();
                       </script>";
                 exit();
             }
@@ -81,12 +79,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } else {
             echo "<script>
                     alert('Erro ao adicionar a monitoria.');
+                    window.history.back();
                   </script>";
             exit();
         }
     } else {
         echo "<script>
                 alert('Aluno não encontrado.');
+                window.history.back();
               </script>";
         exit();
     }

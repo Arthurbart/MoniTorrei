@@ -38,7 +38,7 @@
                     echo"<div class='col-6 col-md-3 mb-3'>
                           <a href='monitoria.php?id=" . htmlspecialchars($row['id']) . "' class='text-decoration-none'>
                               <div class='card shadow-sm'>
-                                <img src='$img_card' class='card-img-top' alt='Imagem do Card'>
+                                <img src='$img_card' class='card-img-top' alt='Imagem do Card' height = '200px'>
                                 <div class='card-body'>
                                   <h5 class='card-title'>" . htmlspecialchars($row['nome']) . "</h5>
                                   <p class='card-text text'>Monitor: ". htmlspecialchars($row['usuario_nome']) ."</p>

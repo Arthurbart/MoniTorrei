@@ -49,7 +49,19 @@
                 <p><strong>Nome completo:</strong> <span id="nome_completo"><?= $_SESSION['nome_usuario'] ?></span></p>
                 <p><strong>Matrícula:</strong> <span id="matricula"><?= $_SESSION['matricula'] ?></span></p>
                 <p><strong>Cargo:</strong> <span id="cargo"><?= $cargo ?></span></p>
-                <p><strong>Monitoria:</strong> <span id="email">joao.silva@email.com</span></p>
+                <?php
+                    $id_usuario = $_SESSION['usuario_id'];
+                    $sql = "SELECT nome FROM monitorias WHERE usuario_id = $id_usuario AND status = 'ativo'";
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                        $monitoria = $result->fetch_assoc();
+                        while ($monitoria) {
+                            echo "<p><strong>Monitoria:</strong> <span id='monitoria'>" . $monitoria['nome'] . "</span></p>";
+                            $monitoria = $result->fetch_assoc();
+                        }
+                    }
+                    
+                ?>
             </div>
             <button style="width: 40%;" type="button" class="btn btn-dark mb-5 me-4" data-bs-toggle="modal" data-bs-target="#alterarFotoModal">Alterar foto de Perfil</button>
             <button style="width: 40%;" type="button" class="btn btn-dark mb-5" data-bs-toggle="modal" data-bs-target="#alterarSenhaModal">Alterar Senha</button>
@@ -73,6 +85,14 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <?php 
+                        if ($_SESSION['foto'] != 'imgs/usuario/default.jpg') {
+                            ?>
+                            <a href="remove_foto.php"><button type="button" class="btn btn-danger" data-bs-dismiss="modal">Remover Foto de Perfil</button></a>
+                            <?php
+                        }
+                        ?>
+
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
                 </form>

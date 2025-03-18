@@ -10,7 +10,7 @@ if (isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] === UPLOAD_ER
         mkdir($diretorio, 0777, true);
     }
 
-    $nome_arquivo = $_SESSION['usuario_id'] . basename($arquivo['name']);
+    $nome_arquivo = $_SESSION['matricula'] . "_FTperfil";
     $caminho_arquivo = $diretorio . $nome_arquivo;
 
     $tipo_arquivo = mime_content_type($arquivo['tmp_name']);

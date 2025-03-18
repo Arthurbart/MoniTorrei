@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 24/02/2025 às 18:37
+-- Tempo de geração: 18/03/2025 às 02:17
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -95,11 +95,12 @@ INSERT INTO `monitorias` (`id`, `nome`, `horario`, `sala`, `usuario_id`, `curso`
 (27, 'Redes de Computadores', '13:00', 'Sala G4', 5, 'Informática', 'desativado', 'Terças e Quintas', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
 (28, 'Química', '13:00', 'Sala G4', 5, 'Todos os Cursos', 'ativo', 'Segunda', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
 (29, 'Física', '13:00', 'Sala G2', 6, 'Todos os Cursos', 'ativo', 'Segunda', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
-(30, 'Programação', '13:00', 'Lab 03', 3, 'Informática', 'ativo', 'Segunda', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
 (31, 'Microbiologia', '13:00', 'Sala G3', 12, 'Alimentos', 'ativo', 'Segunda', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
-(32, 'Matemática Financeira', '13:00', 'Lab 01', 13, 'Administração', 'ativo', 'Segunda', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
 (33, 'Zootecnia', '13:00', 'Estufa', 10, 'Agropecuária', 'ativo', 'Segundas e sextas', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
-(34, 'Futsal', '13:00', 'Ginásio', 3, 'Todos os Cursos', 'ativo', 'Segundas e sextas', 'imgs/banner/default.jpg', 'imgs/card/default.jpg');
+(34, 'Futsal', '13:00', 'Ginásio', 3, 'Todos os Cursos', 'ativo', 'Segundas e sextas', 'imgs/banner/default.jpg', 'imgs/card/default.jpg'),
+(39, 'Matemática', '13:00', 'Prédio I, Sala Multifuncional', 13, 'Administração', 'ativo', 'Segundas e sextas', 'imgs/banner/Matemática_banner.jpeg', 'imgs/card/Matemática_card.jpeg'),
+(40, 'Programação', '10:00', 'Lab 04', 3, 'Informática', 'ativo', 'Segundas', 'imgs/banner/Programação_banner.jpeg', 'imgs/card/Programação_card.jpeg'),
+(41, 'gosto disso', '13:03', 'Estufa', 1, 'Administração', 'desativado', 'Segundas e sextas', 'imgs/banner/default.jpg', 'imgs/card/default.jpg');
 
 -- --------------------------------------------------------
 
@@ -113,7 +114,7 @@ CREATE TABLE `pedidos_conteudo` (
   `monitoria_id` int(11) NOT NULL,
   `conteudo` text NOT NULL,
   `data_pedido` date NOT NULL DEFAULT curdate(),
-  `status` varchar(50) NOT NULL DEFAULT 'Em aguardo'
+  `status` varchar(50) NOT NULL DEFAULT 'Pendente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -175,9 +176,9 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `senha`, `curso`, `nome`, `matricula`, `cargo`, `foto`) VALUES
-(1, 'Bernardo00', 'informatica', 'Arthur Bernardo Barth', 2023319513, 'admin', 'imgs/usuario/120230216_085209.jpg'),
+(1, 'Bernardo00', 'informatica', 'Arthur Bernardo Barth', 2023319513, 'admin', 'imgs/usuario/default.jpg'),
 (2, 'teste', 'informatica', 'pepis', 0, 'admin', 'imgs/usuario/default.jpg'),
-(3, 'juver', 'informatica', 'Felipe Juver', 2023123123, 'aluno', 'imgs/usuario/3juver.jpeg'),
+(3, 'juver', 'informatica', 'Felipe Juver', 2023123123, 'aluno', 'imgs/usuario/default.jpg'),
 (4, 'ferri', 'Alimentos', 'Ferri', 2023319700, 'docente', 'imgs/usuario/default.jpg'),
 (5, 'helena', 'Alimentos', 'Helena Tamiozzo', 2022315206, 'aluno', 'imgs/usuario/default.jpg'),
 (6, '', 'agropecuaria', 'Joaquim Kunz', 2024312099, 'aluno', 'imgs/usuario/default.jpg'),
@@ -258,7 +259,7 @@ ALTER TABLE `documentos`
 -- AUTO_INCREMENT de tabela `monitorias`
 --
 ALTER TABLE `monitorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de tabela `pedidos_conteudo`
