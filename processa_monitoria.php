@@ -27,7 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                   </script>";
             exit();
         }
-        $banner_destino = 'imgs/banner/' . $nome_monitoria . '_banner.' . $banner_ext;
+        $nome_monitoria_banner = str_replace(" ", "_", $nome_monitoria);
+        $banner_destino = 'imgs/banner/' . $nome_monitoria_banner . '_banner.' . $banner_ext;
+
     }
 
     if ($img_card['name']) {
