@@ -252,7 +252,7 @@
                                   </div>
                                   <div class='d-flex'>
                                   ";
-                                  if ($status === 'Pendente' or $status === 'negado') {
+                                  if ($status === 'Em Aguardo' or $status === 'negado') {
                                     echo"
                                       <form action='atualizar_pedido.php' method='POST' class='me-2'>
                                           <input type='hidden' name='pedido_id' value='$pedido_id'>
@@ -261,7 +261,7 @@
                                       </form>
                                       ";
                                   }
-                                  if ($status === 'Pendente' or $status === 'aceito') {
+                                  if ($status === 'Em Aguardo' or $status === 'aceito') {
                                     echo"
                                       <form action='atualizar_pedido.php' method='POST'>
                                           <input type='hidden' name='pedido_id' value='$pedido_id'>
